@@ -15,23 +15,6 @@ public class HandHelper {
         this.hand = new ArrayList<Card>();
     }
 
-    //gets the 5 first card from deck
-    public void initializeHand(Deck d){
-
-        for (int i = 0; i < 5 ; i++){
-            Card tempCard = d.popCard();
-            this.hand.add(tempCard);
-        }
-    }
-
-    //removes specified cards from hand
-    public void removeCardsFromHand(Card[] cards){
-        for (Card c: cards){
-            this.thrownOutCards.add(c);
-            this.hand.remove(c);
-        }
-    }
-
     //adds cards to hand from the top of the deck to make the hand have 5 cards
     public void addCardsToHand(Deck d){
         int handSize = this.hand.size();
@@ -39,6 +22,15 @@ public class HandHelper {
         for (int i = 0; i < 5 - handSize; i++){
             Card tempCard = d.popCard();
             this.hand.add(tempCard);
+        }
+    }
+
+
+    //removes specified cards from hand
+    public void removeCardsFromHand(Card[] cards){
+        for (Card c: cards){
+            this.thrownOutCards.add(c);
+            this.hand.remove(c);
         }
     }
 

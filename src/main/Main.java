@@ -1,28 +1,16 @@
 package main;
 
-import player.Player;
-import player.cards.Card;
+import match.ReadFile;
 import player.cards.Deck;
-import player.cards.Rank;
-import player.cards.Suit;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args){
 
-        Deck deck = new Deck();
-        Player player = new Player(100);
-        Card c = new Card(Rank.FOUR, Suit.DIAMONDS);
+        ReadFile.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt");
+        Deck deck = new Deck(ReadFile.deck);
 
-        player.initializeHand(deck);
-
-        for(Card card: player.getHand()){
-            System.out.println(card);
-        }
-
-        deck.addCard(c);
+        deck.printCards(deck.getSize());
+        deck.shuffle();
 
         System.out.println(deck.getSize());
 

@@ -9,7 +9,7 @@ public class Deck {
     private List<Card> deck;
 
     //creates a deck with given cards from card-file
-    public Deck(ArrayList<Card> d){
+    public Deck(List<Card> d){
         this.deck = d;
     }
 

@@ -29,21 +29,17 @@ public class Player extends HandHelper{
     }
 
     //removes all cards from thrown out pile and adds them to deck
-    public void addThrownOutCardsToDeck(Deck d){
+    private void addThrownOutCardsToDeck(Deck d){
         for(Card c: this.getThrownOutCards()){
             d.addCard(c);
             this.removeCardFromThrownOut(c);
         }
     }
     
-    //add hand to deck after a play and reshuffle the deck
-    public void addHandToDeck(Deck d) {
-
-    	while(this.hand.size() > 0) {
-    		d.addCard(this.hand.get(0));
-    		this.hand.remove(0);
-    	}
-    	d.shuffle();
+    //add hand cards to deck after a play - THIS IS ALWAYS CALLED AFTER A PLAY!!!!!!
+    public void addHandCardsToDeck(Deck d) {
+    	super.removeCardsFromHand(super.getHand());
+        this.addThrownOutCardsToDeck(d);
     }
     
     //get credit
