@@ -32,7 +32,7 @@ public class Player extends HandHelper{
         }
     }
     public int getCredit() { return this.credit; }
-    public void setCredit(int newCredit) { this.credit = newCredit; }
+    public void changeCredit(int creditChange) { this.credit += creditChange; }
 
 
 
