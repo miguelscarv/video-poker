@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class ReadFile {
+final public class ReadFile {
 
     public static List<Card> deck = new ArrayList<Card>();
 
@@ -22,7 +22,11 @@ public class ReadFile {
 
             File cardFile = new File(pathToFile);
             Scanner myReader = new Scanner(cardFile);
-            contents = myReader.nextLine();
+
+            while (myReader.hasNext()) {
+                contents += myReader.nextLine();
+            }
+
             myReader.close();
 
             String[] cardStrings = contents.split(" ");

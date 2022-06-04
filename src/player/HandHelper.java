@@ -2,7 +2,6 @@ package player;
 
 import player.cards.Card;
 import player.cards.Deck;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class HandHelper {
         this.hand = new ArrayList<Card>();
     }
 
-    //adds cards to hand from the top of the deck to make the hand have 5 cards
+    //adds cards to hand until hand has 5 cards
     public void addCardsToHand(Deck d){
         int handSize = this.hand.size();
 
