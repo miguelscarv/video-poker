@@ -31,7 +31,7 @@ public class Deck {
     }
 
     public void printCards(int n){
-        if (this.deck.size() > n) {
+        if (this.deck.size() >= n) {
             for (int i = 0; i < n; i++) {
                 System.out.println(String.format("Card nº%s: %s", i, this.deck.get(i)));
             }

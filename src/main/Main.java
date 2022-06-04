@@ -55,7 +55,12 @@ public class Main {
         System.out.println("Now the deck has " + deck.getSize() + " cards...");
         System.out.println("My hand has " + player.getHand().length + " cards...");
         System.out.println("The size of the thrownOutCards is " + player.getThrownOutCards().length);
-
+        
+        player.addHandToDeck(deck);
+        
+        System.out.println("Hand has: " + player.getHand().length + " cards");
+        System.out.println("Deck has: " + deck.getSize() + " cards");
+        
 
 
 
