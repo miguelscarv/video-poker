@@ -17,7 +17,7 @@ public class Player extends HandHelper{
         return tempCards;
     }
 
-    public void removeCardFromThrownOut(Card c){
+    private void removeCardFromThrownOut(Card c){
         if (this.thrownOutCards.contains(c)){
             this.thrownOutCards.remove(c);
         }else {
