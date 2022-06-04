@@ -49,10 +49,7 @@ public class Main {
         System.out.println("My hand has " + player.getHand().length + " cards...");
         System.out.println("The size of the thrownOutCards is " + player.getThrownOutCards().length);
 
-        for(Card c: player.getThrownOutCards()){
-            deck.addCard(c);
-            player.removeCardFromThrownOut(c);
-        }
+        player.addThrownOutCardsBackToDeck(deck);
 
         System.out.println("\nAFTER ADDING THROWN OUT CARDS BACK TO THE DECK");
         System.out.println("Now the deck has " + deck.getSize() + " cards...");

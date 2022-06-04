@@ -39,4 +39,10 @@ public class HandHelper {
         }
     }
 
+    public Card[] getHand(){
+        Card[] tempCards = new Card[this.hand.size()];
+        tempCards = this.hand.toArray(tempCards);
+        return tempCards;
+    }
+
 }
