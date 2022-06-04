@@ -17,4 +17,6 @@ public class Card {
     public String toString(){
         return "" + this.rank.toString() + " OF " + this.suit.toString();
     }
+
+    public boolean equals(Card c){ return this.rank == c.getRank() && this.suit == c.getSuit();}
 }

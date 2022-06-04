@@ -8,12 +8,13 @@ public class Deck {
 
     private List<Card> deck;
 
+    //creates a deck with given cards from card-file
     public Deck(ArrayList<Card> d){
         this.deck = d;
     }
 
+    //creates a deck with 52 cards from scratch
     public Deck(){
-
         this.deck = new ArrayList<Card>();
 
         for (Rank r:Rank.values()){
@@ -22,14 +23,15 @@ public class Deck {
                 this.deck.add(tempCard);
             }
         }
-
         this.shuffle();
     }
 
+    //shuffles deck
     public void shuffle(){
         Collections.shuffle(this.deck);
     }
 
+    //prints n number of cards
     public void printCards(int n){
         if (this.deck.size() >= n) {
             for (int i = 0; i < n; i++) {
@@ -40,16 +42,32 @@ public class Deck {
         }
     }
 
+    //adds a card to deck
     public void addCard(Card c){
-        this.deck.add(c);
+
+        boolean hasCard = false;
+
+        for (Card cInDeck : this.deck){
+            if (c.equals(cInDeck)){
+                hasCard = true;
+            }
+        }
+
+        if (!hasCard) {
+            this.deck.add(c);
+        }else {
+            System.out.println("This cards is already in the deck");
+        }
     }
 
+    //removes card from deck and returns it
     public Card popCard(){
         Card temp = this.deck.get(0);
         this.deck.remove(0);
         return temp;
     }
 
+    //returns size of deck
     public int getSize(){
         return this.deck.size();
     }

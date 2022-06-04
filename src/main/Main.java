@@ -3,6 +3,8 @@ package main;
 import player.Player;
 import player.cards.Card;
 import player.cards.Deck;
+import player.cards.Rank;
+import player.cards.Suit;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,60 +14,17 @@ public class Main {
 
         Deck deck = new Deck();
         Player player = new Player(100);
+        Card c = new Card(Rank.FOUR, Suit.DIAMONDS);
 
         player.initializeHand(deck);
-        Card[] cards = player.getHand();
 
-        Card[] toRemove = new Card[2];
-        toRemove[0] = cards[0];
-        toRemove[1] = cards[1];
-
-        System.out.println("\nThese are the cards in my hand:");
-
-        for (Card c: cards){
-            System.out.println(c);
+        for(Card card: player.getHand()){
+            System.out.println(card);
         }
 
-        System.out.println("\nThese are the cards I want to remove:");
+        deck.addCard(c);
 
-        for (Card c: toRemove){
-            System.out.println(c);
-        }
-
-        player.removeCardsFromHand(toRemove);
-
-        System.out.println("\nThis is my hand after removing them:");
-
-        for (Card c: player.getHand()){
-            System.out.println(c);
-        }
-
-        player.addCardsToHand(deck);
-
-        System.out.println("\nThis is my hand after refilling my cards:");
-
-        for (Card c: player.getHand()){
-            System.out.println(c);
-        }
-
-        System.out.println("\nNow the deck has " + deck.getSize() + " cards...");
-        System.out.println("My hand has " + player.getHand().length + " cards...");
-        System.out.println("The size of the thrownOutCards is " + player.getThrownOutCards().length);
-
-        player.addThrownOutCardsBackToDeck(deck);
-
-        System.out.println("\nAFTER ADDING THROWN OUT CARDS BACK TO THE DECK");
-        System.out.println("Now the deck has " + deck.getSize() + " cards...");
-        System.out.println("My hand has " + player.getHand().length + " cards...");
-        System.out.println("The size of the thrownOutCards is " + player.getThrownOutCards().length);
-        
-        player.addHandToDeck(deck);
-        
-        System.out.println("Hand has: " + player.getHand().length + " cards");
-        System.out.println("Deck has: " + deck.getSize() + " cards");
-        
-
-
+        System.out.println(deck.getSize());
 
     }
 }
