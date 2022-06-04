@@ -1,11 +1,12 @@
-package Player.cards;
+package player.cards;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Deck {
 
-    private ArrayList<Card> deck;
+    private List<Card> deck;
 
     public Deck(ArrayList<Card> d){
         this.deck = d;
@@ -21,6 +22,7 @@ public class Deck {
                 this.deck.add(tempCard);
             }
         }
+
         this.shuffle();
     }
 
@@ -29,8 +31,12 @@ public class Deck {
     }
 
     public void printCards(int n){
-        for (int i = 0; i < n; i++){
-            System.out.println(String.format("Card nº%s: %s", i, this.deck.get(i)));
+        if (this.deck.size() > n) {
+            for (int i = 0; i < n; i++) {
+                System.out.println(String.format("Card nº%s: %s", i, this.deck.get(i)));
+            }
+        } else {
+            System.out.println("The deck has less than " + n + " cards...");
         }
     }
 
@@ -38,14 +44,10 @@ public class Deck {
         this.deck.add(c);
     }
 
-    public Card removeCard(){
+    public Card popCard(){
         Card temp = this.deck.get(0);
         this.deck.remove(0);
         return temp;
-    }
-
-    public void concatenateDecks(ArrayList<Card> d){
-        this.deck.addAll(d);
     }
 
     public int getSize(){

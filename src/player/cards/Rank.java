@@ -1,4 +1,4 @@
-package Player.cards;
+package player.cards;
 
 public enum Rank {
     TWO,

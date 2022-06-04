@@ -1,23 +1,24 @@
-package Player;
+package player;
 
-import Player.cards.Card;
-import Player.cards.Deck;
+import player.cards.Card;
+import player.cards.Deck;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HandHelper {
 
-    private ArrayList<Card> thrownOutCards = new ArrayList<Card>();
-    private ArrayList<Card> hand;
+    List<Card> thrownOutCards = new ArrayList<Card>();
+    List<Card> hand;
 
     public HandHelper(){
         this.hand = new ArrayList<Card>();
     }
 
-    public void initHand(Deck d){
+    public void initializeHand(Deck d){
 
         for (int i = 0; i < 5 ; i++){
-            Card tempCard = d.removeCard();
+            Card tempCard = d.popCard();
             this.hand.add(tempCard);
         }
     }
@@ -33,7 +34,7 @@ public class HandHelper {
         int handSize = this.hand.size();
 
         for (int i = 0; i < 5 - handSize; i++){
-            Card tempCard = d.removeCard();
+            Card tempCard = d.popCard();
             this.hand.add(tempCard);
         }
     }
