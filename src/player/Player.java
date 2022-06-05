@@ -75,7 +75,7 @@ public class Player extends HandHelper{
 
     }
 
-    public void addToStatistics(String s) {
+    public void addOneToStatistics(String s) {
 
         Integer tempInt = this.statistics.get(s);
         this.statistics.put(s,tempInt+1);
