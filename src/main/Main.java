@@ -2,6 +2,7 @@ package main;
 
 import match.FullCommand;
 import match.Reader;
+import player.cards.Card;
 import player.cards.Deck;
 
 
@@ -17,6 +18,9 @@ public class Main {
         for (FullCommand command: fullCommandList){
             System.out.println(command);
         }
+
+        deck.shuffle();
+        deck.printCards(10);
 
     }
 }

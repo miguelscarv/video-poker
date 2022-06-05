@@ -150,7 +150,7 @@ final public class Reader {
         CommandType commandType = null;
         int[] numbers = null;
 
-       if (s.length()  == 1){
+       if (s.length() == 1){
 
            switch (s.charAt(0)) {
 
