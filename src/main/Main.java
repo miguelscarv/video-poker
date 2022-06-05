@@ -3,10 +3,7 @@ package main;
 import match.FullCommand;
 import match.Reader;
 import player.cards.Deck;
-import states.State;
-import states.Timetocheck;
-import states.Timetodeal;
-import states.Timetodecide;
+import states.*;
 
 
 import java.util.List;
@@ -20,6 +17,7 @@ public class Main {
             State.timetodeal = new Timetodeal();
             State.timetodecide = new Timetodecide();
             State.timetocheck = new Timetocheck();
+            State.timetobet = new Timetobet();
             State.current = State.timetobet;
 
             Reader.readCommandFile("/Users/JB/Desktop/cmd-file.txt");
