@@ -3,7 +3,7 @@ package match;
 import java.util.Arrays;
 
 public class FullCommand {
-    private CommandType command;
+    public CommandType command;
     private int[] numbers;
     private boolean hasNumbers;
 

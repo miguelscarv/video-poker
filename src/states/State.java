@@ -1,11 +1,17 @@
 package states;
 
+import match.FullCommand;
+
 public abstract class State {
 
-    static State timetobet, timetodeal, timetodecide, timetocheck, current;
+    public static State timetobet;
+    public static State timetodeal;
+    public static State timetodecide;
+    public static State timetocheck;
+    public static State current;
 
-    void enter(){}
-    void update(){}
+    public void enter(FullCommand fullcommand){}
+    public void update(FullCommand fullcommand){}
 
 
 }
