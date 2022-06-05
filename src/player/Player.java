@@ -3,13 +3,21 @@ package player;
 import player.cards.Card;
 import player.cards.Deck;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Player extends HandHelper{
 
     private int credit;
+    private int initialCredit;
+    private Map<String, Integer> statistics = new HashMap<String, Integer>();
+
     public Player(int credit){
         super();
         this.credit = credit;
+        this.initialCredit = credit;
+        this.initializeStatistics();
     }
 
     //returns cards added to the thrown out pile
@@ -45,8 +53,34 @@ public class Player extends HandHelper{
     //get credit
     public int getCredit() { return this.credit; }
 
+    public int getInitialCredit() { return this.initialCredit; }
+
+    public Map<String, Integer> getStatistics() { return this.statistics; }
     //change credit
     public void changeCredit(int creditChange) { this.credit += creditChange; }
+
+
+    private void initializeStatistics(){
+
+        this.statistics.put("Jacks or Better", 0);
+        this.statistics.put("Two Pair", 0);
+        this.statistics.put("Three of a Kind", 0);
+        this.statistics.put("Straight", 0);
+        this.statistics.put("Flush", 0);
+        this.statistics.put("Full house", 0);
+        this.statistics.put("Four of a Kind", 0);
+        this.statistics.put("Straight Flush", 0);
+        this.statistics.put("Royal Flush", 0);
+        this.statistics.put("Other", 0);
+
+    }
+
+    public void addToStatistics(String s) {
+
+        Integer tempInt = this.statistics.get(s);
+        this.statistics.put(s,tempInt+1);
+       
+    }
 
     public void bet(int money) {
     	if(money > this.credit || money > 5) {
