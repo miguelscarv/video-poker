@@ -1,24 +1,18 @@
 package main;
 
 import match.FullCommand;
-import match.ReadFile;
+import match.Reader;
 import player.cards.Deck;
-import states.State;
-import states.Timetocheck;
-import states.Timetodeal;
-import states.Timetodecide;
 
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args){
+        
+        Deck deck = new Deck(Reader.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt"));
 
-        ReadFile.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt");
-        Deck deck = new Deck(ReadFile.deck);
-
-        ReadFile.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
-        List<FullCommand> fullCommandList = ReadFile.fullCommandList;
+        List<FullCommand> fullCommandList = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
 
         for (FullCommand command: fullCommandList){
             System.out.println(command);

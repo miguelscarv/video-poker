@@ -10,12 +10,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-final public class ReadFile {
+final public class Reader {
 
-    public static List<Card> deck = new ArrayList<Card>();
-    public static List<FullCommand> fullCommandList = new ArrayList<FullCommand>();
+    private static List<Card> deck = new ArrayList<Card>();
+    private static List<FullCommand> fullCommandList = new ArrayList<FullCommand>();
 
-    public static void readCardFile(String pathToFile){
+    public static List<Card> readCardFile(String pathToFile){
 
         String contents = "";
 
@@ -42,9 +42,11 @@ final public class ReadFile {
             System.out.println("An error occurred reading the card file");
             e.printStackTrace();
         }
+
+        return deck;
     }
 
-    public static void readCommandFile(String pathToFile){
+    public static List<FullCommand> readCommandFile(String pathToFile){
 
         String contents = "";
 
@@ -72,6 +74,7 @@ final public class ReadFile {
             e.printStackTrace();
         }
 
+        return fullCommandList;
     }
 
     private static Card getCorrespondingCard(String s) {
