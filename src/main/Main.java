@@ -1,7 +1,9 @@
 package main;
 
+import match.FullCommand;
 import match.ReadFile;
 import player.cards.Deck;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args){
@@ -9,10 +11,12 @@ public class Main {
         ReadFile.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt");
         Deck deck = new Deck(ReadFile.deck);
 
-        deck.printCards(deck.getSize());
-        deck.shuffle();
+        ReadFile.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
+        List<FullCommand> fullCommandList = ReadFile.fullCommandList;
 
-        System.out.println(deck.getSize());
+        for (FullCommand command: fullCommandList){
+            System.out.println(command);
+        }
 
     }
 }

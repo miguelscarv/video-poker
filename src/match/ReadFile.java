@@ -13,6 +13,7 @@ import java.util.Scanner;
 final public class ReadFile {
 
     public static List<Card> deck = new ArrayList<Card>();
+    public static List<FullCommand> fullCommandList = new ArrayList<FullCommand>();
 
     public static void readCardFile(String pathToFile){
 
@@ -29,7 +30,8 @@ final public class ReadFile {
 
             myReader.close();
 
-            String[] cardStrings = contents.split(" ");
+            contents = contents.replaceAll("\\s+","");
+            String[] cardStrings = contents.split("(?<=\\G..)");
 
             for (String s: cardStrings){
                 Card card = getCorrespondingCard(s);
@@ -40,6 +42,36 @@ final public class ReadFile {
             System.out.println("An error occurred reading the card file");
             e.printStackTrace();
         }
+    }
+
+    public static void readCommandFile(String pathToFile){
+
+        String contents = "";
+
+        try {
+
+            File cardFile = new File(pathToFile);
+            Scanner myReader = new Scanner(cardFile);
+
+            while (myReader.hasNext()) {
+                contents += myReader.nextLine();
+            }
+
+            myReader.close();
+
+            contents = contents.replaceAll("\\s+","");
+            String[] individualCommandArray = contents.split("((?=[bdh$as]))");
+
+            for (String uniqueCommand: individualCommandArray){
+                FullCommand command = getCorrespondingFullCommand(uniqueCommand);
+                fullCommandList.add(command);
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred reading the command file");
+            e.printStackTrace();
+        }
+
     }
 
     private static Card getCorrespondingCard(String s) {
@@ -107,5 +139,58 @@ final public class ReadFile {
 
         Card card = new Card(rank, suit);
         return card;
+    }
+
+    private static FullCommand getCorrespondingFullCommand(String s){
+
+        CommandType commandType = null;
+        int[] numbers = null;
+
+       if (s.length()  == 1){
+
+           switch (s.charAt(0)) {
+
+               case 'b':
+                   commandType = CommandType.BET;
+                   numbers = new int[]{5};
+                   break;
+               case '$':
+                   commandType = CommandType.CREDIT;
+                   break;
+               case 'a':
+                   commandType = CommandType.ADVICE;
+                   break;
+               case 's':
+                   commandType = CommandType.STATISTICS;
+                   break;
+               case 'd':
+                   commandType = CommandType.DEAL;
+                   break;
+
+           }
+
+       } else {
+
+           switch (s.charAt(0)) {
+
+               case 'b':
+                   commandType = CommandType.BET;
+                   numbers = new int[]{Integer.parseInt(s.substring(1))};
+                   break;
+               case 'h':
+                   commandType = CommandType.HOLD;
+                   numbers = new int[s.substring(1).length()];
+
+                   for (int i = 0; i < s.substring(1).length(); i++){
+                        numbers[i] = Character.getNumericValue(s.substring(1).charAt(i));
+                   }
+           }
+       }
+
+       FullCommand fullCommand = new FullCommand(commandType);
+       if (numbers != null) { fullCommand.addNumbers(numbers);}
+
+       return fullCommand;
+
     }
 }

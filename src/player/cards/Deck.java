@@ -55,7 +55,7 @@ public class Deck {
 
         if (!hasCard) {
             this.deck.add(c);
-        }else {
+        } else {
             System.out.println("This cards is already in the deck");
         }
     }
