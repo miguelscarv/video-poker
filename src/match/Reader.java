@@ -5,6 +5,7 @@ import player.cards.Rank;
 import player.cards.Suit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -169,7 +170,10 @@ final public class Reader {
                case 'd':
                    commandType = CommandType.DEAL;
                    break;
-
+               case 'h':
+                   commandType = CommandType.HOLD;
+                   numbers = new int[0];
+                   break;
            }
 
        } else {
