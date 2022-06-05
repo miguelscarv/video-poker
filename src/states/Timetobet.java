@@ -11,7 +11,7 @@ public class Timetobet extends State{
 
     public void update(FullCommand fullcommand){
 
-        switch(fullcommand.command){
+        switch(fullcommand.getCommand()){
 
             case BET:
                 //do everything needed to make a bet

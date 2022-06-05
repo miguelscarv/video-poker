@@ -7,11 +7,12 @@ public class Timetodeal extends State {
     public void enter(FullCommand fullcommand){
 
 
+
     }
 
     public void update(FullCommand fullcommand){
 
-        switch(fullcommand.command){
+        switch(fullcommand.getCommand()){
 
             case BET:
                 System.out.println("Invalid command, please Deal");

@@ -3,7 +3,7 @@ package match;
 import java.util.Arrays;
 
 public class FullCommand {
-    public CommandType command;
+    private CommandType command;
     private int[] numbers;
     private boolean hasNumbers;
 
@@ -24,6 +24,8 @@ public class FullCommand {
     public boolean hasNumbers(){
         return this.hasNumbers;
     }
+
+    public CommandType getCommand() { return this.command; }
 
     public String toString() {
         if (hasNumbers){
