@@ -11,7 +11,7 @@ public class Timetodecide extends State{
 
     public void update(FullCommand fullcommand){
 
-        switch(fullcommand.command){
+        switch(fullcommand.getCommand()){
 
             case BET:
                 System.out.println("Invalid command, please choose cards to hold");

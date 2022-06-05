@@ -1,7 +1,7 @@
 package main;
 
 import match.FullCommand;
-import match.ReadFile;
+import match.Reader;
 import player.cards.Deck;
 import states.State;
 import states.Timetocheck;
@@ -22,8 +22,8 @@ public class Main {
             State.timetocheck = new Timetocheck();
             State.current = State.timetobet;
 
-            ReadFile.readCommandFile("/Users/JB/Desktop/cmd-file.txt");
-            List<FullCommand> fullCommandList2 = ReadFile.fullCommandList;
+            Reader.readCommandFile("/Users/JB/Desktop/cmd-file.txt");
+            List<FullCommand> fullCommandList2 = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
 
             for (FullCommand command: fullCommandList2){
                 State.current.enter(command);
@@ -43,15 +43,16 @@ public class Main {
             System.exit(0);
         }
 
-        ReadFile.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt");
-        Deck deck = new Deck(ReadFile.deck);
+        Deck deck = new Deck(Reader.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt"));
 
-        ReadFile.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
-        List<FullCommand> fullCommandList = ReadFile.fullCommandList;
+        List<FullCommand> fullCommandList = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
 
         for (FullCommand command: fullCommandList){
             System.out.println(command);
         }
+
+        deck.shuffle();
+        deck.printCards(10);
 
     }
 }
