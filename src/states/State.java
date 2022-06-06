@@ -12,6 +12,7 @@ public abstract class State {
     public static State current;
 
     static Player player;
+    static int mamas;
 
     public void enter(FullCommand fullcommand){}
     public void update(FullCommand fullcommand){}
