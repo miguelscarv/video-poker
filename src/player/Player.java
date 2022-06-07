@@ -62,6 +62,7 @@ public class Player extends HandHelper{
             this.credit = credit;
         } else {
             System.out.println("The player only has " + this.credit + " credit....\nCredit can\'t be negative");
+            System.exit(0);
         }
     }
     public int getLastBetAmount() { return this.lastBetAmount; }
