@@ -2,13 +2,19 @@ package player;
 
 import player.cards.Card;
 import player.cards.Deck;
+import player.cards.Rank;
+import player.cards.Suit;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HandHelper {
 
     List<Card> thrownOutCards = new ArrayList<Card>();
-    List<Card> hand;
+    private List<Card> hand;
+
 
     public HandHelper(){
         this.hand = new ArrayList<Card>();
@@ -39,5 +45,6 @@ public class HandHelper {
         tempCards = this.hand.toArray(tempCards);
         return tempCards;
     }
+
 
 }

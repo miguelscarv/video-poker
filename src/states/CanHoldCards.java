@@ -2,15 +2,20 @@ package states;
 
 import match.FullCommand;
 import player.cards.Card;
+import player.cards.Rank;
+import player.cards.Suit;
 
 import java.util.*;
 
 public class CanHoldCards implements State{
 
     Match match;
+    private Map<Suit,Integer> suitCount = new HashMap<Suit,Integer>();
+    private Map<Rank,Integer> rankCount = new HashMap<Rank,Integer>();
 
     public CanHoldCards(Match match){
         this.match = match;
+        this.setCountersToZero();
     }
 
     @Override
@@ -57,13 +62,57 @@ public class CanHoldCards implements State{
 
     }
 
-    public void computeHandOutcome(){
-        System.out.println("STILL NEED TO IMPLEMENT THIS!!!!!");
+    private void computeHandOutcome(){
+
+        System.out.println("Hand combination: " + this.classifyHand());
+
+        //UPDATE PLAYER'S CREDIT!!!
+        this.match.player.addHandCardsToDeck(this.match.deck);
+
+        if(!this.match.isDebugMode){
+            this.match.deck.shuffle();
+        }
+    }
+
+    private String classifyHand(){
+
+        for (Card c: this.match.player.getHand()){
+            this.suitCount.put(c.getSuit(),this.suitCount.get(c.getSuit())+1);
+            this.rankCount.put(c.getRank(),this.rankCount.get(c.getRank())+1);
+        }
+
+        String combination = "";
+
+        //HERE ADD COMBINATIONS TO CORRECTLY CLASSIFY THE HAND
+
+        boolean isFlush = this.suitCount.get(Suit.CLUBS) == 5 ||
+                this.suitCount.get(Suit.DIAMONDS) == 5 ||
+                this.suitCount.get(Suit.HEARTS) == 5 ||
+                this.suitCount.get(Suit.SPADES) == 5;
+
+        if(isFlush){
+            combination = "Flush";
+        }else{
+            combination = "Other";
+        }
+
+        this.setCountersToZero();
+
+        return combination;
+    }
+
+    private void setCountersToZero(){
+        for(Rank r: Rank.values()){
+            rankCount.put(r,0);
+        }
+        for(Suit s: Suit.values()){
+            suitCount.put(s,0);
+        }
     }
 
     @Override
     public void printAdvice() {
-        //NEED TO IMPLEMENT THIS!!!!!!!!!!!
+        System.out.println("STILL NEED TO IMPLEMENT printAdvice!!!!!!");
     }
 
     private boolean contains(final int[] arr, final int key) {

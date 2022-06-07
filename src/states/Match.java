@@ -15,7 +15,8 @@ public class Match {
     Player player;
     Deck deck;
 
-    public Match(Player player, Deck deck){
+    boolean isDebugMode;
+    public Match(Player player, Deck deck, boolean isDebugMode){
 
         this.player = player;
         this.deck = deck;
@@ -25,17 +26,19 @@ public class Match {
         this.canHoldCards = new CanHoldCards(this);
 
         this.currentState = canBet;
+
+        this.isDebugMode = isDebugMode;
     }
 
     public void bet(FullCommand command){
         this.currentState.bet(command);
     }
 
-    public void deal(){
+    public void dealCards(){
         this.currentState.dealCards();
     }
 
-    public void hold(FullCommand command){
+    public void holdCards(FullCommand command){
         this.currentState.holdCards(command);
     }
 

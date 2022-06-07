@@ -21,7 +21,7 @@ public class Main {
 
         List<FullCommand> fullCommandList = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
 
-        Match match = new Match(player,deck);
+        Match match = new Match(player,deck,true);
         FullCommand command1 = new FullCommand(CommandType.BET);
 
         match.bet(command1);
@@ -30,16 +30,16 @@ public class Main {
         System.out.println("------------------------");
 
 
-        match.deal();
+        match.dealCards();
         System.out.println("Hand before removing cards :");
         for(Card c: player.getHand()){
             System.out.println(c);
         }
 
         FullCommand command2 = new FullCommand(CommandType.HOLD);
-        int[] toHold = {3,4,5};
+        int[] toHold = {1,2,3,4,5};
         command2.addNumbers(toHold);
-        match.hold(command2);
+        match.holdCards(command2);
 
         System.out.println("Hand after removing cards :");
         for(Card c: player.getHand()){
