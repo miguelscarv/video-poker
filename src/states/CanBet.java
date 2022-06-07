@@ -16,7 +16,7 @@ public class CanBet implements State{
         if(command.hasNumbers()) {
 
             if (command.getNumbers()[0] > 5 || command.getNumbers()[0] < 1) {
-                System.out.println("Illegal amount to bet...");
+                System.out.println("Illegal amount to bet -> " + command.getNumbers()[0] + " credits");
             } else {
                 //update players credit, update players lastBetAmount, update players hasBetBefore and change state
                 this.match.player.setCredit(this.match.player.getCredit()-command.getNumbers()[0]);
@@ -41,7 +41,7 @@ public class CanBet implements State{
 
     @Override
     public void printCredit() {
-        System.out.println("The player\'s credit is: " + this.match.player.getCredit());
+        System.out.println("The player\'s credit is: " + this.match.player.getCredit()+ " \n");
     }
 
     @Override
@@ -62,6 +62,7 @@ public class CanBet implements State{
     @Override
     public void printStatistics() {
 
+        System.out.println("------------------------------");
         System.out.println("Hand");
         System.out.println("------------------------------");
 
@@ -84,9 +85,14 @@ public class CanBet implements State{
         System.out.println(String.format("Total                       %s", sum));
         System.out.println("------------------------------");
 
-        float increase = (1 - (float) this.match.player.getCredit()/this.match.player.getInitialCredit())*100;
-        System.out.println(String.format("Credit                 %s (%s%%)", this.match.player.getCredit(), increase));
+        float increase = ((float) this.match.player.getCredit()/this.match.player.getInitialCredit() - 1 )*100;
+        System.out.println(String.format("Credit                 %s (%s%%)", this.match.player.getCredit(), round(increase,2)));
+        System.out.println("------------------------------");
+    }
 
+    private static float round (float value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (float) Math.round(value * scale) / scale;
     }
 }
 

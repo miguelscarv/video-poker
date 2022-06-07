@@ -7,4 +7,5 @@ public enum CommandType {
     HOLD,
     ADVICE,
     STATISTICS
+
 }

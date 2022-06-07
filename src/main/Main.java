@@ -17,33 +17,29 @@ public class Main {
 
 
         Deck deck = new Deck(Reader.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt"));
-        Player player = new Player(100);
+        Player player = new Player(10000);
 
         List<FullCommand> fullCommandList = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
 
         Match match = new Match(player,deck,true);
-        FullCommand command1 = new FullCommand(CommandType.BET);
 
-        match.bet(command1);
+        for(FullCommand command: fullCommandList){
 
-        System.out.println("Players credit after betting with no number: " + player.getCredit());
-        System.out.println("------------------------");
+            if (command.getCommand() == CommandType.BET){
+                match.bet(command);
+            } else if (command.getCommand() == CommandType.DEAL){
+                match.dealCards();
+            } else if (command.getCommand() == CommandType.HOLD){
+                match.holdCards(command);
+            } else if (command.getCommand() == CommandType.ADVICE){
+                match.printAdvice();
+            } else if (command.getCommand() == CommandType.CREDIT){
+                match.printCredit();
+            } else if (command.getCommand() == CommandType.STATISTICS){
+                match.printStatistics();
+            }
 
 
-        match.dealCards();
-        System.out.println("Hand before removing cards :");
-        for(Card c: player.getHand()){
-            System.out.println(c);
-        }
-
-        FullCommand command2 = new FullCommand(CommandType.HOLD);
-        int[] toHold = {1,2,3,4,5};
-        command2.addNumbers(toHold);
-        match.holdCards(command2);
-
-        System.out.println("Hand after removing cards :");
-        for(Card c: player.getHand()){
-            System.out.println(c);
         }
 
     }

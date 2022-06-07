@@ -10,8 +10,8 @@ public enum Rank {
     EIGHT,
     NINE,
     TEN,
-    QUEEN,
     JACK,
+    QUEEN,
     KING,
     ACE
 }

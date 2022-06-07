@@ -37,10 +37,12 @@ public class Match {
     public void dealCards(){
         this.currentState.dealCards();
     }
-
     public void holdCards(FullCommand command){
         this.currentState.holdCards(command);
     }
+    public void printAdvice() { this.currentState.printAdvice(); }
+    public void printCredit() { this.currentState.printCredit(); }
+    public void printStatistics() { this.currentState.printStatistics(); }
 
     public State getCanBet() { return this.canBet; }
     public State getCanDealCards() { return this.canDealCards; }
