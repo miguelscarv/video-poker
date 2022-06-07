@@ -3,19 +3,13 @@ package states;
 import match.FullCommand;
 import player.Player;
 
-public abstract class State {
+public interface State {
 
-    public static State timetobet;
-    public static State timetodeal;
-    public static State timetodecide;
-    public static State timetocheck;
-    public static State current;
-
-    static Player player;
-    static int mamas;
-
-    public void enter(FullCommand fullcommand){}
-    public void update(FullCommand fullcommand){}
-
+    void bet(FullCommand command);
+    void printCredit();
+    void dealCards();
+    void holdCards(FullCommand command);
+    void printAdvice();
+    void printStatistics();
 
 }
