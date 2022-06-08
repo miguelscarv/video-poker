@@ -1,12 +1,11 @@
 package main;
 
-import match.CommandType;
-import match.FullCommand;
+import command.CommandType;
+import command.FullCommand;
 import match.Reader;
 import player.Player;
-import player.cards.*;
 import player.cards.Deck;
-import states.*;
+import match.*;
 
 
 

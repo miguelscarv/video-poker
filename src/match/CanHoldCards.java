@@ -1,9 +1,15 @@
-package states;
+package match;
 
-import match.FullCommand;
+import command.FullCommand;
+import match.Match;
+import match.Payout;
+import match.State;
+import player.Player;
 import player.cards.Card;
+import player.cards.Deck;
 import player.cards.Rank;
 import player.cards.Suit;
+import match.IllegalException;
 
 import java.util.*;
 
@@ -19,17 +25,20 @@ public class CanHoldCards extends State {
     }
 
     @Override
-    public void bet(FullCommand command) {
-        System.out.println("b: illegal command");
+    public void bet(FullCommand command) throws IllegalException {
+        throw new IllegalException("b");
     }
 
     @Override
-    public void dealCards() {
-        System.out.println("d: illegal command");
+    public void dealCards() throws IllegalException {
+        throw new IllegalException("d");
     }
 
     @Override
     public void holdCards(FullCommand command) {
+
+        Player player = super.match.getPlayer();
+        Deck deck = super.match.getDeck();
 
         if (command.hasNumbers()) {
 
@@ -38,19 +47,19 @@ public class CanHoldCards extends State {
             //THE COMMAND NUMBERS TELLS YOU WHAT CARDS TO HOLD ON TOO!!!!!
             for (int i = 0; i < 5; i++) {
                 if (!contains(command.getNumbers(), i)) {
-                    toRemoveList.add(super.match.player.getHand()[i]);
+                    toRemoveList.add(player.getHand()[i]);
                 }
             }
 
             Card[] toRemoveArray = new Card[toRemoveList.size()];
             toRemoveList.toArray(toRemoveArray);
-            super.match.player.removeCardsFromHand(toRemoveArray);
-            super.match.player.addCardsToHand(super.match.deck);
+            player.removeCardsFromHand(toRemoveArray);
+            player.addCardsToHand(deck);
 
 
         } else {
-            super.match.player.addHandCardsToDeck(super.match.deck);
-            super.match.player.addCardsToHand(super.match.deck);
+            player.addHandCardsToDeck(deck);
+            player.addCardsToHand(deck);
         }
 
         this.computeHandOutcome();
@@ -60,44 +69,49 @@ public class CanHoldCards extends State {
 
     private void computeHandOutcome() {
 
+        Player player = this.match.getPlayer();
+        Deck deck = super.match.getDeck();
+        
         String typeOfHand = this.classifyHand();
-        System.out.println("Hand: " + Arrays.toString(super.match.player.getHand()));
+        System.out.println("Hand: " + Arrays.toString(player.getHand()));
         System.out.println("Hand type: " + typeOfHand);
+
+
         if (typeOfHand.equals("Royal Flush")) {
-            if (super.match.player.getLastBetAmount() == 5) {
-                super.match.player.setCredit(super.match.player.getCredit() + 4000);
+            if (player.getLastBetAmount() == 5) {
+                player.setCredit(player.getCredit() + 4000);
             } else {
-                super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.royalFlush);
+                player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.royalFlush);
             }
         } else if (typeOfHand.equals("Straight Flush")) {
-            super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.straightFlush);
+            player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.straightFlush);
         } else if (typeOfHand.equals("Four of a Kind")) {
             if (this.rankCount.get(Rank.ACE) == 4) {
-                super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.fourAces);
+                player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.fourAces);
             } else if (this.rankCount.get(Rank.TWO) >= 4 || this.rankCount.get(Rank.THREE) >= 4 || this.rankCount.get(Rank.FOUR) >= 4) {
-                super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.four2_4);
+                player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.four2_4);
             } else {
-                super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.four5_K);
+                player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.four5_K);
             }
         } else if (typeOfHand.equals("Full house")) {
-            super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.fullHouse);
+            player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.fullHouse);
         } else if (typeOfHand.equals("Flush")) {
-            super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.flush);
+            player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.flush);
         } else if (typeOfHand.equals("Straight")) {
-            super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.straight);
+            player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.straight);
         } else if (typeOfHand.equals("Three of a Kind")) {
-            super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.threeOfAKind);
+            player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.threeOfAKind);
         } else if (typeOfHand.equals("Two Pair")) {
-            super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.twoPair);
+            player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.twoPair);
         } else if (typeOfHand.equals("Jacks or Better")) {
-            super.match.player.setCredit(super.match.player.getCredit() + super.match.player.getLastBetAmount() * Payout.jacksOrBetter);
+            player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.jacksOrBetter);
         }
 
-        super.match.player.addOneToStatistics(typeOfHand);
-        super.match.player.addHandCardsToDeck(super.match.deck);
+        player.addOneToStatistics(typeOfHand);
+        player.addHandCardsToDeck(deck);
 
-        if (!super.match.isDebugMode) {
-            super.match.deck.shuffle();
+        if (!super.match.getIsDebugMode()) {
+            deck.shuffle();
         }
 
         this.setCountersToZero();
@@ -105,7 +119,9 @@ public class CanHoldCards extends State {
 
     private String classifyHand() {
 
-        for (Card c : super.match.player.getHand()) {
+        Player player = this.match.getPlayer();
+
+        for (Card c : player.getHand()) {
             this.suitCount.put(c.getSuit(), this.suitCount.get(c.getSuit()) + 1);
             this.rankCount.put(c.getRank(), this.rankCount.get(c.getRank()) + 1);
         }
@@ -156,7 +172,6 @@ public class CanHoldCards extends State {
         }
         return false;
     }
-
     private boolean isFlush() {
         boolean isFlush = this.suitCount.get(Suit.CLUBS) == 5 ||
                 this.suitCount.get(Suit.DIAMONDS) == 5 ||
@@ -164,7 +179,6 @@ public class CanHoldCards extends State {
                 this.suitCount.get(Suit.SPADES) == 5;
         return isFlush;
     }
-
     private boolean isJacksOrBetter() {
         boolean isJacksOrBetter = this.rankCount.get(Rank.JACK) == 2 ||
                 this.rankCount.get(Rank.QUEEN) == 2 ||
@@ -172,7 +186,6 @@ public class CanHoldCards extends State {
                 this.rankCount.get(Rank.ACE) == 2;
         return isJacksOrBetter;
     }
-
     private boolean isTwoPair() {
         int numberOfPairs = 0;
 
@@ -186,7 +199,6 @@ public class CanHoldCards extends State {
         }
         return false;
     }
-
     private boolean isFullHouse() {
         boolean hasPair = false;
         boolean hasThree = false;
@@ -201,7 +213,6 @@ public class CanHoldCards extends State {
         }
         return hasPair && hasThree;
     }
-
     private boolean isFourOfAKind() {
         for (Rank r : Rank.values()) {
             if (rankCount.get(r) >= 4) {
@@ -210,7 +221,6 @@ public class CanHoldCards extends State {
         }
         return false;
     }
-
     private boolean isFiveConsecutiveCards() {
 
         int counter = 0;
@@ -247,7 +257,7 @@ public class CanHoldCards extends State {
     }
 
     @Override
-    public void printAdvice() {
+    public void getAdvice() {
         System.out.println("\nSTILL NEED TO IMPLEMENT printAdvice!!!!!!\n");
     }
 
