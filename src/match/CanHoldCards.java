@@ -256,9 +256,15 @@ public class CanHoldCards extends State {
         }
     }
 
+    public int[] getAdvice(){
+        //PRECISO MUDAR -- AQUI ELE TEM DE RETORNAR OS INDICES DAS CARTAS A REMOVER
+        return new int[0];
+    }
+
     @Override
-    public void getAdvice() {
-        System.out.println("\nSTILL NEED TO IMPLEMENT printAdvice!!!!!!\n");
+    public void printAdvice(){
+        //CHAMA O getAdvice E IMPRIME SUGESTAO
+        int[] numbers = this.getAdvice();
     }
 
     private boolean contains(final int[] arr, final int key) {

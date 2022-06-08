@@ -30,7 +30,7 @@ public class CanDealCards extends State {
     }
 
     @Override
-    public void getAdvice() throws IllegalException {
+    public void printAdvice() throws IllegalException {
         throw new IllegalException("a");
     }
 }

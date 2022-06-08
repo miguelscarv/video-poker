@@ -55,11 +55,18 @@ public class Match {
     }
     public void printAdvice() {
         try{
-            this.currentState.getAdvice();
+            this.currentState.printAdvice();
         }catch (IllegalException i){
             System.out.println(i.getMessage());
         }
     }
+
+    public int[] getAdvice(){
+        //SO PODE SER CHAMADO NO ESTADO CanHoldCards
+        //NUNCA RETORNA EXCEÇAO
+        return new int[0];
+    }
+
     public void printCredit() { this.currentState.printCredit(); }
     public void printStatistics() { this.currentState.printStatistics(); }
 
