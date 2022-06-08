@@ -1,9 +1,10 @@
 package main;
 
+import match.CommandType;
 import match.FullCommand;
 import match.Reader;
-import player.cards.Card;
-import player.cards.Deck;
+import player.Player;
+import player.cards.*;
 import player.cards.Deck;
 import states.*;
 
@@ -14,42 +15,30 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
 
-        if (args[0].equals("-d")){
-            State.timetodeal = new Timetodeal();
-            State.timetodecide = new Timetodecide();
-            State.timetocheck = new Timetocheck();
-            State.timetobet = new Timetobet();
-            State.current = State.timetobet;
-
-            Reader.readCommandFile("/Users/JB/Desktop/cmd-file.txt");
-            List<FullCommand> fullCommandList = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
-
-            for (FullCommand command: fullCommandList){
-                State.current.enter(command);
-                State.current.update(command);
-            }
-
-
-        }else if (args[0].equals("-s")){
-            //simulation mode
-
-        }else{
-
-            System.out.println("Invalid passing Arguments");
-            System.exit(-1);
-        }
 
         Deck deck = new Deck(Reader.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt"));
-
+        Player player = new Player(10000);
 
         List<FullCommand> fullCommandList = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
 
-        for (FullCommand command: fullCommandList){
-            System.out.println(command);
-        }
+        Match match = new Match(player,deck,true);
 
-        deck.shuffle();
-        deck.printCards(10);
+        for(FullCommand command: fullCommandList){
+
+            if (command.getCommand() == CommandType.BET){
+                match.bet(command);
+            } else if (command.getCommand() == CommandType.DEAL){
+                match.dealCards();
+            } else if (command.getCommand() == CommandType.HOLD){
+                match.holdCards(command);
+            } else if (command.getCommand() == CommandType.ADVICE){
+                match.printAdvice();
+            } else if (command.getCommand() == CommandType.CREDIT){
+                match.printCredit();
+            } else if (command.getCommand() == CommandType.STATISTICS){
+                match.printStatistics();
+            }
+        }
 
     }
 }

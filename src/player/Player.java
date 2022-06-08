@@ -11,6 +11,10 @@ public class Player extends HandHelper{
 
     private int credit;
     private int initialCredit;
+
+    private int lastBetAmount;
+    private boolean hasBetBefore;
+
     private Map<String, Integer> statistics = new HashMap<String, Integer>();
 
     public Player(int credit){
@@ -18,6 +22,7 @@ public class Player extends HandHelper{
         this.credit = credit;
         this.initialCredit = credit;
         this.initializeStatistics();
+        this.hasBetBefore = false;
     }
 
     //returns cards added to the thrown out pile
@@ -52,12 +57,21 @@ public class Player extends HandHelper{
     
     //get credit
     public int getCredit() { return this.credit; }
-
+    public void setCredit(int credit) {
+        if (this.credit+credit > 0) {
+            this.credit = credit;
+        } else {
+            System.out.println("The player only has " + this.credit + " credit....\nCredit can\'t be negative");
+            System.exit(0);
+        }
+    }
+    public int getLastBetAmount() { return this.lastBetAmount; }
+    public void setLastBetAmount(int amount ) { this.lastBetAmount = amount;}
+    public boolean getHasBetBefore() { return this.hasBetBefore; }
+    public void setHasBetBefore(boolean b) { this.hasBetBefore = b; }
     public int getInitialCredit() { return this.initialCredit; }
 
     public Map<String, Integer> getStatistics() { return this.statistics; }
-    //change credit
-    public void changeCredit(int creditChange) { this.credit += creditChange; }
 
 
     private void initializeStatistics(){
@@ -82,11 +96,5 @@ public class Player extends HandHelper{
        
     }
 
-    public void bet(int money) {
-    	if(money > this.credit || money > 5) {
-    		System.out.println("Illegal amount");
-    	}else{
-    		this.credit -= money;
-    	}
-    }
+
 }

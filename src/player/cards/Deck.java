@@ -45,19 +45,8 @@ public class Deck {
     //adds a card to deck
     public void addCard(Card c){
 
-        boolean hasCard = false;
+        this.deck.add(c);
 
-        for (Card cInDeck : this.deck){
-            if (c.equals(cInDeck)){
-                hasCard = true;
-            }
-        }
-
-        if (!hasCard) {
-            this.deck.add(c);
-        } else {
-            System.out.println("This cards is already in the deck");
-        }
     }
 
     //removes card from deck and returns it
