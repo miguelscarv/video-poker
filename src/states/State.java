@@ -1,5 +1,6 @@
 package states;
 
+import match.CommandType;
 import match.FullCommand;
 import player.Player;
 
@@ -15,6 +16,7 @@ public abstract class State {
 
     public void enter(FullCommand fullcommand){}
     public void update(FullCommand fullcommand){}
+
 
 
 }
