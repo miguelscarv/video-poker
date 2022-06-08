@@ -16,7 +16,7 @@ public abstract class State {
     }
     public abstract void dealCards() throws IllegalException;
     public abstract void holdCards(FullCommand command) throws IllegalException;
-    public abstract void getAdvice() throws IllegalException;
+    public abstract void printAdvice() throws IllegalException;
     public void printStatistics(){
 
         Player player = this.match.getPlayer();
