@@ -38,8 +38,6 @@ public class Main {
             } else if (command.getCommand() == CommandType.STATISTICS){
                 match.printStatistics();
             }
-
-
         }
 
     }
