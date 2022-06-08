@@ -1,4 +1,4 @@
-package states;
+package match;
 
 public final class Payout {
     final static int royalFlush = 250;

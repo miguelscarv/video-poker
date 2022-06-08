@@ -2,21 +2,17 @@ package player;
 
 import player.cards.Card;
 import player.cards.Deck;
-import player.cards.Rank;
-import player.cards.Suit;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class HandHelper {
+public class Hand {
 
     List<Card> thrownOutCards = new ArrayList<Card>();
     private List<Card> hand;
 
 
-    public HandHelper(){
+    public Hand(){
         this.hand = new ArrayList<Card>();
     }
 

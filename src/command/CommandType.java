@@ -1,4 +1,4 @@
-package match;
+package command;
 
 public enum CommandType {
     BET,

@@ -1,4 +1,4 @@
-package match;
+package command;
 
 import java.util.Arrays;
 

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Player extends HandHelper{
+public class Player extends Hand {
 
     private int credit;
     private int initialCredit;
