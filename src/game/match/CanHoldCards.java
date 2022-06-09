@@ -319,7 +319,7 @@ public class CanHoldCards extends State {
             Card[] card = player.getHand();
             for (int i=0; i<5; i++) {
 
-                if(card[i].getRank() == rank ){
+                if(card[i].getRank() ==  ){
                     indexArray[index++] = i+1;
                 }
             }
