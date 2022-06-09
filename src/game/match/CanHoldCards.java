@@ -268,6 +268,7 @@ public class CanHoldCards extends State {
         }
 
 
+
         boolean isFlush = this.isFlush();
         boolean isJacksOrBetter = this.isJacksOrBetter();
         boolean isThreeOfAKind = this.isThreeOfAKind();
@@ -281,6 +282,33 @@ public class CanHoldCards extends State {
         boolean isFourToARoyalFlush = this.isFourToARoyalFlush();
         boolean isThreeAces = isThreeOfAKind && this.rankCount.get(Rank.ACE) == 3;
         boolean isFourToAStraightFlush = this.isFourToAStraightFlush();
+        boolean isFourToFlush = this.isFourToFlush();
+        boolean isThreeToARoyalFlush = this.isThreeToARoyalFlush();
+        boolean isFourToAnOutsideStraight = this.isFourToAnOutsideStraight();
+        boolean isLowPair = this.isLowPair();
+        boolean isAKQJUnsuited = this.isAKQJUnsuited();
+        boolean isThreeToAStraightFlush1 = this.isThreeToAStraightFlush1();
+        boolean isFourToAnInsideStraightWithThreeHighCards = this.isFourToAnInsideStraightWithThreeHighCards();
+        boolean isQJSuited = this.isQJSuited();
+        boolean isThreeToAFlushWithTwoHighCards = this.isThreeToAFlushWithTwoHighCards();
+        boolean isTwoSuitedHighCards = this.isTwoSuitedHighCards();
+        boolean isFourToAnInsideStraightWithTwoHighCards = this.isFourToAnInsideStraightWithTwoHighCards();
+        boolean isThreeToAStraightFlush2 = this.isThreeToAStraightFlush2();
+        boolean isFourToAnInsideStraightWithOneHighCards = this.isFourToAnInsideStraightWithOneHighCards();
+        boolean isKQJUnsuited = this.isKQJUnsuited();
+        boolean isJTSuited = this.isJTSuited();
+        boolean isQJUnsuited = this.isQJUnsuited();
+        boolean isThreeToAFlushWithOneHighCard = this.isThreeToAFlushWithOneHighCard();
+        boolean isQTSuited = this.isQTSuited();
+        boolean isThreeToAStraightFlush3 = this.isThreeToAStraightFlush3();
+        boolean isKQUnsuited = this.isKQUnsuited();
+        boolean isKJUnsuited = this.isKJUnsuited();
+        boolean isAce = this.isAce();
+        boolean isKTSuited = this.isKTSuited();
+        boolean isJQK = this.isJQK();
+        boolean isFourToAnInsideStraightWithNoHighCards = this.isFourToAnInsideStraightWithNoHighCards();
+        boolean isThreeToAFlushWithNoHighCard = this.isThreeToAFlushWithNoHighCard();
+
 
 
 
@@ -336,10 +364,59 @@ public class CanHoldCards extends State {
 
 
 
-        } else if (isTwoPair) {
+        } else if (isFourToFlush) {
+
+        } else if (isThreeToARoyalFlush) {
+
+        } else if (isFourToAnOutsideStraight) {
+
+        } else if (isLowPair) {
+
+        } else if (isAKQJUnsuited) {
+
+        } else if (isThreeToAStraightFlush1) {
+
+        } else if (isFourToAnInsideStraightWithThreeHighCards) {
+
+        } else if (isQJSuited) {
+
+        } else if (isThreeToAFlushWithTwoHighCards) {
+
+        } else if (isTwoSuitedHighCards) {
+
+        } else if (isFourToAnInsideStraightWithTwoHighCards) {
+
+        } else if (isThreeToAStraightFlush2) {
+
+        } else if (isFourToAnInsideStraightWithOneHighCards) {
+
+        } else if (isKQJUnsuited) {
+
+        } else if (isJTSuited) {
+
+        } else if (isQJUnsuited) {
+
+        } else if (isThreeToAFlushWithOneHighCard) {
+
+        } else if (isQTSuited) {
+
+        } else if (isThreeToAStraightFlush3) {
+
+        } else if (isKQUnsuited || isKJUnsuited) {
+
+        } else if (isAce) {
+
+        } else if (isKTSuited) {
+
+        } else if (isJQK) {
+
+        } else if (isFourToAnInsideStraightWithNoHighCards) {
+
+        } else if (isThreeToAFlushWithNoHighCard) {
 
 
         } else {
+
 
         }
 
@@ -375,6 +452,222 @@ public class CanHoldCards extends State {
 
 
     }
+
+    private boolean isFourToFlush() {
+
+
+        return false;
+
+
+    }
+
+    private boolean isThreeToARoyalFlush() {
+
+
+        return false;
+
+
+    }
+
+    private boolean isFourToAnOutsideStraight() {
+
+
+        return false;
+
+
+    }
+
+    private boolean isLowPair() {
+
+
+        return false;
+
+
+    }
+
+    private boolean isAKQJUnsuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isThreeToAStraightFlush1(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isFourToAnInsideStraightWithThreeHighCards(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isQJSuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isThreeToAFlushWithTwoHighCards(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isTwoSuitedHighCards(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isFourToAnInsideStraightWithTwoHighCards(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isThreeToAStraightFlush2(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isFourToAnInsideStraightWithOneHighCards(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isKQJUnsuited(){
+
+
+        return false;
+
+
+    }
+
+
+    private boolean isJTSuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isQJUnsuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isThreeToAFlushWithOneHighCard(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isQTSuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isThreeToAStraightFlush3(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isKQUnsuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isKJUnsuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isAce(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isKTSuited(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isJQK(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isFourToAnInsideStraightWithNoHighCards(){
+
+
+        return false;
+
+
+    }
+
+    private boolean isThreeToAFlushWithNoHighCard(){
+
+
+        return false;
+
+
+    }
+
+
+
+
+
+
+
 
     private Rank getThreeOfAKindRank(){
 
