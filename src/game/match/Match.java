@@ -1,4 +1,4 @@
-package match;
+package game.match;
 
 import command.FullCommand;
 import player.Player;
@@ -59,12 +59,7 @@ public class Match {
         }catch (IllegalException i){
             System.out.println(i.getMessage());
         }
-    }
 
-    public int[] getAdvice(){
-        //SO PODE SER CHAMADO NO ESTADO CanHoldCards
-        //NUNCA RETORNA EXCEÇAO
-        return new int[0];
     }
 
     public void printCredit() { this.currentState.printCredit(); }

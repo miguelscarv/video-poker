@@ -3,3 +3,5 @@ out/
 /bin/
 .classpath
 .project
+.idea/
+video_poker.iml

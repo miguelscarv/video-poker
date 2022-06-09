@@ -314,12 +314,7 @@ public class CanHoldCards extends State {
 
         } else if (isThreeOfAKind) {
 
-
-            for (Rank r : Rank.values()) {
-                if (this.rankCount.get(r) == 3) {
-                    Rank rank = r;
-                }
-            }
+            Rank rank = this.getThreeOfAKindRank();
 
             int[] indexArray = new int[3];
             int index = 0;
@@ -337,8 +332,6 @@ public class CanHoldCards extends State {
 
         } else if (isTwoPair) {
 
-
-
         } else if (isJacksOrBetter) {
 
 
@@ -350,15 +343,22 @@ public class CanHoldCards extends State {
 
         }
 
+        this.setCountersToZero();
         return new int[0];
     }
 
     @Override
     public void printAdvice(){
-        //CHAMA O getAdvice E IMPRIME SUGESTAO
-        int[] numbers = this.getAdvice();
-    }
 
+        int[] numbers = this.getAdvice();
+
+        if (numbers.length != 0) {
+            System.out.println("The player should hold cards " + Arrays.toString(numbers));
+        } else {
+            System.out.println("The player should hold no cards");
+        }
+
+    }
 
     private boolean isFourToARoyalFlush() {
 
@@ -374,6 +374,17 @@ public class CanHoldCards extends State {
         return false;
 
 
+    }
+
+    private Rank getThreeOfAKindRank(){
+
+        for (Rank r: this.rankCount.keySet()){
+            if (this.rankCount.get(r) == 3){
+                return r;
+            }
+        }
+
+        return null;
     }
 
     private boolean contains(final int[] arr, final int key) {

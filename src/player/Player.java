@@ -11,6 +11,7 @@ public class Player extends Hand {
 
     private int credit;
     private int initialCredit;
+    private int totalAmountBet;
 
     private int lastBetAmount;
     private boolean hasBetBefore;
@@ -21,6 +22,7 @@ public class Player extends Hand {
         super();
         this.credit = credit;
         this.initialCredit = credit;
+        this.totalAmountBet = 0;
         this.initializeStatistics();
         this.hasBetBefore = false;
     }
@@ -96,5 +98,11 @@ public class Player extends Hand {
        
     }
 
+    public void addToTotalBetAmount(int newBetAmount){
+        this.totalAmountBet += newBetAmount;
+    }
 
+    public int getTotalAmountBet() { return this.totalAmountBet; }
+
+    public int getTotalAmountGained() { return this.getCredit() - this.getInitialCredit(); }
 }

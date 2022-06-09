@@ -1,9 +1,6 @@
-package match;
+package game.match;
 
 import command.FullCommand;
-import match.Match;
-import match.IllegalException;
-import match.State;
 import player.Player;
 
 public class CanBet extends State {
@@ -24,6 +21,7 @@ public class CanBet extends State {
             } else {
                 //update players credit, update players lastBetAmount, update players hasBetBefore and change state
                 player.setCredit(player.getCredit()-command.getNumbers()[0]);
+                player.addToTotalBetAmount(command.getNumbers()[0]);
                 player.setHasBetBefore(true);
                 player.setLastBetAmount(command.getNumbers()[0]);
                 super.match.setState(super.match.getCanDealCards());
@@ -34,8 +32,10 @@ public class CanBet extends State {
 
             if (player.getHasBetBefore()){
                 player.setCredit(player.getCredit()-player.getLastBetAmount());
+                player.addToTotalBetAmount(player.getLastBetAmount());
             } else {
                 player.setCredit(player.getCredit()-5);
+                player.addToTotalBetAmount(5);
                 player.setHasBetBefore(true);
                 player.setLastBetAmount(5);
             }
