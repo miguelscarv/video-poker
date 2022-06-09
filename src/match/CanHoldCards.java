@@ -258,6 +258,84 @@ public class CanHoldCards extends State {
 
     public int[] getAdvice(){
         //PRECISO MUDAR -- AQUI ELE TEM DE RETORNAR OS INDICES DAS CARTAS A REMOVER
+
+        Player player = super.match.getPlayer();
+        Deck deck = super.match.getDeck();
+
+        for (Card c : player.getHand()) {
+            this.suitCount.put(c.getSuit(), this.suitCount.get(c.getSuit()) + 1);
+            this.rankCount.put(c.getRank(), this.rankCount.get(c.getRank()) + 1);
+        }
+
+
+        boolean isFlush = this.isFlush();
+        boolean isJacksOrBetter = this.isJacksOrBetter();
+        boolean isThreeOfAKind = this.isThreeOfAKind();
+        boolean isTwoPair = this.isTwoPair();
+        boolean isFullHouse = this.isFullHouse();
+        boolean isFourOfAKind = this.isFourOfAKind();
+        boolean isFiveConsecutiveCards = this.isFiveConsecutiveCards();
+        boolean isStraightFlush = isFiveConsecutiveCards && isFlush;
+        boolean isRoyalFlush = isStraightFlush && this.rankCount.get(Rank.ACE) == 1 && this.rankCount.get(Rank.TEN) == 1;
+
+        boolean isFourToARoyalFlush = this.isFourToARoyalFlush();
+        boolean isThreeAces = isThreeOfAKind && this.rankCount.get(Rank.ACE) == 3;
+
+        if (isRoyalFlush || isStraightFlush || isFourOfAKind) {
+
+            int[] indexArray = new int[]{1,2,3,4,5};
+            return indexArray;
+
+        } else if (isFourToARoyalFlush) {
+
+            //falta implementar
+
+        } else if (isThreeAces) {
+
+            int[] indexArray = new int[3];
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+                if(card[i].getRank() == Rank.ACE){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+
+        } else if (isFullHouse || isFlush || isFiveConsecutiveCards) {
+
+            int[] indexArray = new int[]{1,2,3,4,5};
+            return indexArray;
+
+        } else if (isThreeOfAKind) {
+
+
+            for (Rank r : Rank.values()) {
+                if (this.rankCount.get(r) == 3) {
+                    Rank rank = r;
+                }
+            }
+
+            int[] indexArray = new int[3];
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getRank() == rank ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+        } else if (isTwoPair) {
+
+        } else if (isJacksOrBetter) {
+
+        } else {
+
+        }
+
         return new int[0];
     }
 
@@ -265,6 +343,15 @@ public class CanHoldCards extends State {
     public void printAdvice(){
         //CHAMA O getAdvice E IMPRIME SUGESTAO
         int[] numbers = this.getAdvice();
+    }
+
+
+    private boolean isFourToARoyalFlush() {
+
+
+        return false;
+
+
     }
 
     private boolean contains(final int[] arr, final int key) {
