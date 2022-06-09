@@ -256,13 +256,11 @@ public class CanHoldCards extends State {
         //PRECISO MUDAR -- AQUI ELE TEM DE RETORNAR OS INDICES DAS CARTAS A REMOVER
 
         Player player = super.match.getPlayer();
-        Deck deck = super.match.getDeck();
 
         for (Card c : player.getHand()) {
             this.suitCount.put(c.getSuit(), this.suitCount.get(c.getSuit()) + 1);
             this.rankCount.put(c.getRank(), this.rankCount.get(c.getRank()) + 1);
         }
-
 
         boolean isFlush = this.isFlush();
         boolean isJacksOrBetter = this.isJacksOrBetter();
@@ -277,7 +275,7 @@ public class CanHoldCards extends State {
         boolean isFourToARoyalFlush = this.isFourToARoyalFlush();
         boolean isThreeAces = isThreeOfAKind && this.rankCount.get(Rank.ACE) == 3;
 
-        if (isRoyalFlush || isStraightFlush || isFourOfAKind) {
+        if (isRoyalFlush || isStraightFlush || isFourOfAKind || isFullHouse || isFlush || isFiveConsecutiveCards) {
 
             int[] indexArray = new int[]{1,2,3,4,5};
             return indexArray;
@@ -299,27 +297,16 @@ public class CanHoldCards extends State {
 
             return indexArray;
 
-
-        } else if (isFullHouse || isFlush || isFiveConsecutiveCards) {
-
-            int[] indexArray = new int[]{1,2,3,4,5};
-            return indexArray;
-
         } else if (isThreeOfAKind) {
 
-
-            for (Rank r : Rank.values()) {
-                if (this.rankCount.get(r) == 3) {
-                    Rank rank = r;
-                }
-            }
+            Rank rank = this.getThreeOfAKindRank();
 
             int[] indexArray = new int[3];
             int index = 0;
-            Card[] card = player.getHand();
-            for (int i=0; i<5; i++) {
+            Card[] cards = player.getHand();
 
-                if(card[i].getRank() ==  ){
+            for (int i=0; i<5; i++) {
+                if(cards[i].getRank() == rank){
                     indexArray[index++] = i+1;
                 }
             }
@@ -348,6 +335,17 @@ public class CanHoldCards extends State {
         return false;
 
 
+    }
+
+    private Rank getThreeOfAKindRank(){
+
+        for (Rank r: this.rankCount.keySet()){
+            if (this.rankCount.get(r) == 3){
+                return r;
+            }
+        }
+
+        return null;
     }
 
     private boolean contains(final int[] arr, final int key) {

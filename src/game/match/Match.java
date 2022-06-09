@@ -54,11 +54,15 @@ public class Match {
         }
     }
     public void printAdvice() {
+        System.out.println("falta o advice");
+        /*
         try{
+
             this.currentState.printAdvice();
         }catch (IllegalException i){
             System.out.println(i.getMessage());
         }
+        */
     }
 
     public int[] getAdvice(){
