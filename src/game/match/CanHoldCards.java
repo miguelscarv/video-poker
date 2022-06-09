@@ -253,9 +253,10 @@ public class CanHoldCards extends State {
     }
 
     public int[] getAdvice(){
-        //PRECISO MUDAR -- AQUI ELE TEM DE RETORNAR OS INDICES DAS CARTAS A REMOVER
+        //PRECISO MUDAR -- AQUI ELE TEM DE RETORNAR OS INDICES DAS CARTAS A DAR HOLD
 
         Player player = super.match.getPlayer();
+        Card[] cards = player.getHand();
 
         for (Card c : player.getHand()) {
             this.suitCount.put(c.getSuit(), this.suitCount.get(c.getSuit()) + 1);
@@ -275,10 +276,11 @@ public class CanHoldCards extends State {
         boolean isFourToARoyalFlush = this.isFourToARoyalFlush();
         boolean isThreeAces = isThreeOfAKind && this.rankCount.get(Rank.ACE) == 3;
 
+        int[] indexArray;
+
         if (isRoyalFlush || isStraightFlush || isFourOfAKind || isFullHouse || isFlush || isFiveConsecutiveCards) {
 
-            int[] indexArray = new int[]{1,2,3,4,5};
-            return indexArray;
+            indexArray = new int[]{1,2,3,4,5};
 
         } else if (isFourToARoyalFlush) {
 
@@ -286,24 +288,22 @@ public class CanHoldCards extends State {
 
         } else if (isThreeAces) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
             int index = 0;
-            Card[] card = player.getHand();
+
             for (int i=0; i<5; i++) {
-                if(card[i].getRank() == Rank.ACE){
+                if(cards[i].getRank() == Rank.ACE){
                     indexArray[index++] = i+1;
                 }
             }
 
-            return indexArray;
 
         } else if (isThreeOfAKind) {
 
             Rank rank = this.getThreeOfAKindRank();
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
             int index = 0;
-            Card[] cards = player.getHand();
 
             for (int i=0; i<5; i++) {
                 if(cards[i].getRank() == rank){
@@ -319,15 +319,22 @@ public class CanHoldCards extends State {
 
         }
 
+        this.setCountersToZero();
         return new int[0];
     }
 
     @Override
     public void printAdvice(){
-        //CHAMA O getAdvice E IMPRIME SUGESTAO
-        int[] numbers = this.getAdvice();
-    }
 
+        int[] numbers = this.getAdvice();
+
+        if (numbers.length != 0) {
+            System.out.println("The player should hold cards " + Arrays.toString(numbers));
+        } else {
+            System.out.println("The player should hold no cards");
+        }
+
+    }
 
     private boolean isFourToARoyalFlush() {
 
