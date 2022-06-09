@@ -1,4 +1,4 @@
-package match;
+package game.match;
 
 import command.FullCommand;
 import player.Player;

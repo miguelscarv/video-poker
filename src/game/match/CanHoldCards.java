@@ -1,15 +1,11 @@
-package match;
+package game.match;
 
 import command.FullCommand;
-import match.Match;
-import match.Payout;
-import match.State;
 import player.Player;
 import player.cards.Card;
 import player.cards.Deck;
 import player.cards.Rank;
 import player.cards.Suit;
-import match.IllegalException;
 
 import java.util.*;
 

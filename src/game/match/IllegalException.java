@@ -1,4 +1,4 @@
-package match;
+package game.match;
 
 public class IllegalException extends Exception{
 

@@ -1,9 +1,6 @@
-package match;
+package game.match;
 
 import command.FullCommand;
-import match.Match;
-import match.IllegalException;
-import match.State;
 
 public class CanDealCards extends State {
 

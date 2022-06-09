@@ -2,44 +2,21 @@ package main;
 
 import command.CommandType;
 import command.FullCommand;
-import match.Reader;
+import game.DoubleBonus710;
+import game.GameMode;
+import game.match.Reader;
 import player.Player;
 import player.cards.Deck;
-import match.*;
-
-
+import game.match.*;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args){
 
+        GameMode doubleBonus710 = new DoubleBonus710(10000, "/Users/miguelcarvalho/Desktop/card-file.txt",  "/Users/miguelcarvalho/Desktop/cmd-file.txt");
 
-        Deck deck = new Deck(Reader.readCardFile("/Users/miguelcarvalho/Desktop/card-file.txt"));
-        Player player = new Player(10000);
-
-        List<FullCommand> fullCommandList = Reader.readCommandFile("/Users/miguelcarvalho/Desktop/cmd-file.txt");
-
-        Match match = new Match(player,deck,true);
-
-        for(FullCommand command: fullCommandList){
-
-            if (command.getCommand() == CommandType.BET){
-                match.bet(command);
-            } else if (command.getCommand() == CommandType.DEAL){
-                match.dealCards();
-            } else if (command.getCommand() == CommandType.HOLD){
-                match.holdCards(command);
-            } else if (command.getCommand() == CommandType.ADVICE){
-                match.printAdvice();
-            } else if (command.getCommand() == CommandType.CREDIT){
-                match.printCredit();
-            } else if (command.getCommand() == CommandType.STATISTICS){
-                match.printStatistics();
-            }
-        }
-
-
+        doubleBonus710.run();
 
     }
 }
