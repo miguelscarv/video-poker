@@ -104,5 +104,5 @@ public class Player extends Hand {
 
     public int getTotalAmountBet() { return this.totalAmountBet; }
 
-
+    public int getTotalAmountGained() { return this.getCredit() - this.getInitialCredit(); }
 }

@@ -39,10 +39,11 @@ public abstract class State {
         for (int value : player.getStatistics().values()) {
             sum += value;
         }
+
         System.out.println(String.format("Total                       %s", sum));
         System.out.println("------------------------------");
 
-        float increase = ((float) (player.getCredit()-player.getInitialCredit()) / player.getTotalAmountBet() - 1) * 100;
+        float increase = ((float) (player.getTotalAmountGained()+player.getTotalAmountBet()) / player.getTotalAmountBet()) * 100;
         System.out.println(String.format("Credit                 %s (%s%%)", player.getCredit(), round(increase,2)));
         System.out.println("------------------------------");
     }
