@@ -3,6 +3,7 @@ package game.match;
 import command.FullCommand;
 import player.Player;
 
+
 public abstract class State {
 
     Match match;
@@ -51,5 +52,6 @@ public abstract class State {
         int scale = (int) Math.pow(10, precision);
         return (float) Math.round(value * scale) / scale;
     }
+
 
 }
