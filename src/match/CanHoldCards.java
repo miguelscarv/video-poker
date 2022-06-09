@@ -280,6 +280,9 @@ public class CanHoldCards extends State {
 
         boolean isFourToARoyalFlush = this.isFourToARoyalFlush();
         boolean isThreeAces = isThreeOfAKind && this.rankCount.get(Rank.ACE) == 3;
+        boolean isFourToAStraightFlush = this.isFourToAStraightFlush();
+
+
 
         if (isRoyalFlush || isStraightFlush || isFourOfAKind) {
 
@@ -328,9 +331,20 @@ public class CanHoldCards extends State {
                 }
             }
 
+        } else if (isFourToAStraightFlush) {
+
+
+
         } else if (isTwoPair) {
 
+
+
         } else if (isJacksOrBetter) {
+
+
+
+        } else if (isTwoPair) {
+
 
         } else {
 
@@ -347,6 +361,14 @@ public class CanHoldCards extends State {
 
 
     private boolean isFourToARoyalFlush() {
+
+
+        return false;
+
+
+    }
+
+    private boolean isFourToAStraightFlush() {
 
 
         return false;
