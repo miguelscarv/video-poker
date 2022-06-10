@@ -2,6 +2,8 @@ package game.match;
 
 import command.FullCommand;
 
+import java.util.Arrays;
+
 public class CanDealCards extends State {
 
 
@@ -19,6 +21,10 @@ public class CanDealCards extends State {
 
         super.match.getPlayer().addCardsToHand(super.match.getDeck());
         super.match.setState(super.match.getCanHoldCards());
+
+        if (this.match.getIsDebugMode()){
+            System.out.println("player\'s hand " + Arrays.toString(this.match.getPlayer().getHand()));
+        }
     }
 
     @Override

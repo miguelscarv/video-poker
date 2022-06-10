@@ -25,6 +25,9 @@ public class CanBet extends State {
                 player.setHasBetBefore(true);
                 player.setLastBetAmount(command.getNumbers()[0]);
                 super.match.setState(super.match.getCanDealCards());
+                if (this.match.getIsDebugMode()){
+                    System.out.println("player is betting " + command.getNumbers()[0]);
+                }
             }
 
         } else {
@@ -33,11 +36,17 @@ public class CanBet extends State {
             if (player.getHasBetBefore()){
                 player.setCredit(player.getCredit()-player.getLastBetAmount());
                 player.addToTotalBetAmount(player.getLastBetAmount());
+                if (this.match.getIsDebugMode()){
+                    System.out.println("player is betting " + player.getLastBetAmount());
+                }
             } else {
                 player.setCredit(player.getCredit()-5);
                 player.addToTotalBetAmount(5);
                 player.setHasBetBefore(true);
                 player.setLastBetAmount(5);
+                if (this.match.getIsDebugMode()){
+                    System.out.println("player is betting 5");
+                }
             }
             super.match.setState(super.match.getCanDealCards());
         }

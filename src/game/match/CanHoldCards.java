@@ -114,7 +114,7 @@ public class CanHoldCards extends State {
                 System.out.println("player loses and his credit is " + afterCredit);
             }
         }
-        
+
         player.addOneToStatistics(typeOfHand);
         player.addHandCardsToDeck(deck);
 
