@@ -8,18 +8,18 @@ cd ..
 
 echo ""
 echo "Done building jar named videopoker.jar..."
-echo ""
 
-read -p "Run it in debug or simulation mode? [d/s] " mode
-
-if [[ "$mode" == "d" ]];
+if [[ "$1" == "-d" ]];
 then 
-	java -jar src/videopoker.jar -d 10000 ./card-file.txt ./cmd-file.txt
-elif [[ "$mode" == "s" ]];
+	echo "Running it in DEBUG mode..."
+	echo ""
+	java -jar src/videopoker.jar $1 $2 ./card-file.txt ./cmd-file.txt
+elif [[ "$1" == "-s" ]];
 then 
-	read -p "How many plays: " nplays
-	java -jar src/videopoker.jar -s 10000 5 $nplays
+	echo "Running it in SIMULATION mode"
+	echo""
+	java -jar src/videopoker.jar $1 $2 $3 $4
 else
-	echo "Command does not match either options..."
+	echo "Commands do not match either options..."
 fi
 
