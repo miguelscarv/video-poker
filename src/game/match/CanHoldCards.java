@@ -67,11 +67,13 @@ public class CanHoldCards extends State {
 
         Player player = this.match.getPlayer();
         Deck deck = super.match.getDeck();
+        int beforeCredit = player.getCredit();
         
         String typeOfHand = this.classifyHand();
-        System.out.println("Hand: " + Arrays.toString(player.getHand()));
-        System.out.println("Hand type: " + typeOfHand);
-
+        if (this.match.getIsDebugMode()) {
+            System.out.println("player\'s hand " + Arrays.toString(player.getHand()));
+            //System.out.println("Hand type: " + typeOfHand);
+        }
 
         if (typeOfHand.equals("Royal Flush")) {
             if (player.getLastBetAmount() == 5) {
@@ -103,6 +105,16 @@ public class CanHoldCards extends State {
             player.setCredit(player.getCredit() + player.getLastBetAmount() * Payout.jacksOrBetter);
         }
 
+        int afterCredit = player.getCredit();
+
+        if (this.match.getIsDebugMode()) {
+            if (afterCredit > beforeCredit) {
+                System.out.println("player wins with a " + typeOfHand.toUpperCase() + " and his credit is " + afterCredit);
+            } else {
+                System.out.println("player loses and his credit is " + afterCredit);
+            }
+        }
+        
         player.addOneToStatistics(typeOfHand);
         player.addHandCardsToDeck(deck);
 
@@ -253,7 +265,6 @@ public class CanHoldCards extends State {
     }
 
     public int[] getAdvice(){
-        //PRECISO MUDAR -- AQUI ELE TEM DE RETORNAR OS INDICES DAS CARTAS A DAR HOLD
 
         Player player = super.match.getPlayer();
         Card[] cards = player.getHand();
@@ -329,9 +340,9 @@ public class CanHoldCards extends State {
         int[] numbers = this.getAdvice();
 
         if (numbers.length != 0) {
-            System.out.println("The player should hold cards " + Arrays.toString(numbers));
+            System.out.println("the player should hold cards " + Arrays.toString(numbers));
         } else {
-            System.out.println("The player should hold no cards");
+            System.out.println("the player should hold no cards");
         }
 
     }

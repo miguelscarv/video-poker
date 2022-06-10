@@ -11,7 +11,7 @@ public abstract class State {
     public State(Match m){ this.match = m; }
     public abstract void bet(FullCommand command) throws IllegalException;
     public void printCredit(){
-        System.out.println("The player\'s credit is: " + this.match.getPlayer().getCredit() + " \n");
+        System.out.println("player\'s credit is " + this.match.getPlayer().getCredit());
     }
     public abstract void dealCards() throws IllegalException;
     public abstract void holdCards(FullCommand command) throws IllegalException;
