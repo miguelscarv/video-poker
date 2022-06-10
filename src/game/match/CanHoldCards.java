@@ -544,16 +544,27 @@ public class CanHoldCards extends State {
 
     private boolean isLowPair() {
 
-
-        return false;
+    	boolean isLowPair = this.rankCount.get(Rank.TWO) == 2 ||
+                this.rankCount.get(Rank.THREE) == 2 ||
+                this.rankCount.get(Rank.FOUR) == 2 ||
+                this.rankCount.get(Rank.FIVE) == 2 || 
+        		this.rankCount.get(Rank.SIX) == 2 ||
+                this.rankCount.get(Rank.SEVEN) == 2 ||
+                this.rankCount.get(Rank.EIGHT) == 2 ||
+                this.rankCount.get(Rank.NINE) == 2 ||
+                this.rankCount.get(Rank.TEN) == 2;
+    	
+        return isLowPair;
 
 
     }
 
     private boolean isAKQJUnsuited(){
+    	boolean isAKQJUnsuited = this.rankCount.get(Rank.ACE)==1 && 
+    			this.rankCount.get(Rank.KING)==1 && this.rankCount.get(Rank.QUEEN)==1 &&
+    			this.rankCount.get(Rank.JACK)==1; 
 
-
-        return false;
+        return isAKQJUnsuited;
 
 
     }
@@ -583,9 +594,28 @@ public class CanHoldCards extends State {
     }
 
     private boolean isThreeToAFlushWithTwoHighCards(){
-
-
-        return false;
+    	
+    	Player player = this.match.getPlayer();
+    	int counter = 0;
+    	int high = 0;
+    	
+    	for (Card c : player.getHand()) {
+            if(this.suitCount.get(c.getSuit()) >= 3) {
+            	if(c.getRank()==Rank.JACK || c.getRank()==Rank.QUEEN
+            			|| c.getRank()==Rank.KING || c.getRank()==Rank.ACE){
+            		if(high>1) {
+            			return false;
+            		}else {
+            			high++;
+            		}
+            	}else {
+            		counter++;
+            	}
+            }
+        }
+    	
+        
+    	return counter==3;
 
 
     }
@@ -632,9 +662,29 @@ public class CanHoldCards extends State {
 
 
     private boolean isJTSuited(){
-
-
-        return false;
+    	//i might have overcomplicated
+    	
+    	boolean isJTSuited = false;
+    	Player player = this.match.getPlayer();
+    	Suit s1 = Suit.CLUBS, s2 = Suit.CLUBS;
+    	boolean j = false;
+    	boolean t = false;
+    	
+    	for (Card c : player.getHand()) {
+            if(c.getRank() == Rank.JACK) {
+            	j = true;
+            	s1 = c.getSuit();
+            }else if(c.getRank() == Rank.TEN) {
+            	t = true;
+            	s2 = c.getSuit();
+            }
+        }
+    	
+    	if(j && t) {
+    		return s1==s2;
+    	}else {
+    		return false;
+    	}
 
 
     }
@@ -648,9 +698,28 @@ public class CanHoldCards extends State {
     }
 
     private boolean isThreeToAFlushWithOneHighCard(){
-
-
-        return false;
+    	Player player = this.match.getPlayer();
+    	int counter = 0;
+    	int high = 0;
+    	
+    	for (Card c : player.getHand()) {
+            if(this.suitCount.get(c.getSuit()) >= 3) {
+            	if(c.getRank()==Rank.JACK || c.getRank()==Rank.QUEEN
+            			|| c.getRank()==Rank.KING || c.getRank()==Rank.ACE){
+            		if(high>0) {
+            			return false;
+            		}else {
+            			high++;
+            		}
+            	}else {
+            		counter++;
+            	}
+            }
+        }
+    	
+        
+    	return counter==3;
+    	
 
 
     }
@@ -664,9 +733,8 @@ public class CanHoldCards extends State {
     }
 
     private boolean isThreeToAStraightFlush3(){
-
-
-        return false;
+    	
+    	return false;
 
 
     }
@@ -689,8 +757,8 @@ public class CanHoldCards extends State {
 
     private boolean isAce(){
 
-
-        return false;
+    	boolean isAce = this.rankCount.get(Rank.ACE) == 1;
+        return isAce;
 
 
     }
@@ -705,8 +773,11 @@ public class CanHoldCards extends State {
 
     private boolean isJQK(){
 
-
-        return false;
+    	boolean isJQK = this.rankCount.get(Rank.JACK) == 1 || 
+    			this.rankCount.get(Rank.QUEEN) == 1 ||
+    			this.rankCount.get(Rank.KING) == 1;
+    	
+    	return isJQK;
 
 
     }
@@ -720,10 +791,23 @@ public class CanHoldCards extends State {
     }
 
     private boolean isThreeToAFlushWithNoHighCard(){
-
-
-        return false;
-
+    	 
+    	Player player = this.match.getPlayer();
+    	int counter = 0;
+    	
+    	for (Card c : player.getHand()) {
+            if(this.suitCount.get(c.getSuit()) >= 3) {
+            	if(c.getRank()==Rank.JACK || c.getRank()==Rank.QUEEN
+            			|| c.getRank()==Rank.KING || c.getRank()==Rank.ACE) {
+            		return false;
+            	}else {
+            		counter++;
+            	}
+            }
+        }
+    	
+        
+    	return counter==3;
 
     }
 
