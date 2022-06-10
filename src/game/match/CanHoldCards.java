@@ -1,15 +1,15 @@
-package match;
+package game.match;
 
 import command.FullCommand;
-import match.Match;
-import match.Payout;
-import match.State;
+import game.match.Match;
+import game.match.Payout;
+import game.match.State;
 import player.Player;
 import player.cards.Card;
 import player.cards.Deck;
 import player.cards.Rank;
 import player.cards.Suit;
-import match.IllegalException;
+import game.match.IllegalException;
 
 import java.util.*;
 
@@ -24,10 +24,13 @@ public class CanHoldCards extends State {
         this.setCountersToZero();
     }
 
+
+
     @Override
     public void bet(FullCommand command) throws IllegalException {
         throw new IllegalException("b");
     }
+
 
     @Override
     public void dealCards() throws IllegalException {
@@ -319,7 +322,40 @@ public class CanHoldCards extends State {
 
         } else if (isFourToARoyalFlush) {
 
-            //falta implementar
+            int[] indexArray = new int[4];
+
+            int index = 0;
+            Card[] card = player.getHand();
+
+            if(this.isFlush()){
+
+
+                for (int i=0; i<5; i++) {
+                    if(card[i].getRank() == Rank.ACE ||
+                            card[i].getRank() == Rank.KING ||
+                            card[i].getRank() == Rank.QUEEN ||
+                            card[i].getRank() == Rank.JACK ||
+                            card[i].getRank() == Rank.TEN){
+                        indexArray[index++] = i+1;
+                    }
+                }
+
+
+            }else{
+
+                Suit suit = this.getFourOfAKindSuit();
+
+                for (int i=0; i<5; i++) {
+
+                    if(card[i].getSuit() == suit ){
+                        indexArray[index++] = i+1;
+                    }
+                }
+
+            }
+
+            return indexArray;
+
 
         } else if (isThreeAces) {
 
@@ -365,6 +401,20 @@ public class CanHoldCards extends State {
 
 
         } else if (isFourToFlush) {
+
+            Suit suit = this.getFourOfAKindSuit();
+
+            int[] indexArray = new int[4];
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
 
         } else if (isThreeToARoyalFlush) {
 
@@ -439,8 +489,20 @@ public class CanHoldCards extends State {
 
     private boolean isFourToARoyalFlush() {
 
+        boolean is4TF = this.isFourToFlush();
+        int counter = 0;
+        boolean aux = false;
 
-        return false;
+        if(this.rankCount.get(Rank.ACE) == 1) counter++;
+        if(this.rankCount.get(Rank.KING) == 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
+        if(this.rankCount.get(Rank.JACK) == 1) counter++;
+        if(this.rankCount.get(Rank.TEN) == 1) counter++;
+
+        if(counter >= 4) aux = true;
+        boolean toreturn = aux && is4TF;
+
+        return toreturn;
 
 
     }
@@ -455,9 +517,12 @@ public class CanHoldCards extends State {
 
     private boolean isFourToFlush() {
 
+        boolean is4TF = this.suitCount.get(Suit.CLUBS) >= 4 ||
+                this.suitCount.get(Suit.DIAMONDS) >= 4 ||
+                this.suitCount.get(Suit.HEARTS) >= 4 ||
+                this.suitCount.get(Suit.SPADES) >= 4;
 
-        return false;
-
+        return is4TF;
 
     }
 
@@ -663,7 +728,16 @@ public class CanHoldCards extends State {
     }
 
 
+    private Suit getFourOfAKindSuit(){
 
+        for (Suit s: this.suitCount.keySet()){
+            if (this.suitCount.get(s) >= 4){
+                return s;
+            }
+        }
+
+        return null;
+    }
 
 
 
