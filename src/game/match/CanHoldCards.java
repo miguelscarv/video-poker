@@ -292,6 +292,7 @@ public class CanHoldCards extends State {
         boolean isStraightFlush = isFiveConsecutiveCards && isFlush;
         boolean isRoyalFlush = isStraightFlush && this.rankCount.get(Rank.ACE) == 1 && this.rankCount.get(Rank.TEN) == 1;
 
+
         boolean isFourToARoyalFlush = this.isFourToARoyalFlush();
         boolean isThreeAces = isThreeOfAKind && this.rankCount.get(Rank.ACE) == 3;
         boolean isFourToAStraightFlush = this.isFourToAStraightFlush();
@@ -325,9 +326,11 @@ public class CanHoldCards extends State {
         int[] indexArray;
 
 
+
         if (isRoyalFlush || isStraightFlush || isFourOfAKind) {
 
             indexArray = new int[]{1,2,3,4,5};
+
 
         } else if (isFourToARoyalFlush) {
 
@@ -503,6 +506,7 @@ public class CanHoldCards extends State {
 
 
         } else if (isLowPair) {
+
 
             indexArray = new int[2];
 
@@ -935,11 +939,11 @@ public class CanHoldCards extends State {
         int counter = 0;
         boolean aux = false;
 
-        if(this.rankCount.get(Rank.ACE) == 1) counter++;
-        if(this.rankCount.get(Rank.KING) == 1) counter++;
-        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
-        if(this.rankCount.get(Rank.JACK) == 1) counter++;
-        if(this.rankCount.get(Rank.TEN) == 1) counter++;
+        if(this.rankCount.get(Rank.ACE) >= 1) counter++;
+        if(this.rankCount.get(Rank.KING) >= 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) >= 1) counter++;
+        if(this.rankCount.get(Rank.JACK) >= 1) counter++;
+        if(this.rankCount.get(Rank.TEN) >= 1) counter++;
 
         if(counter >= 4) aux = true;
         boolean toreturn = aux && is4TF;
@@ -989,11 +993,11 @@ public class CanHoldCards extends State {
         int counter = 0;
         boolean aux = false;
 
-        if(this.rankCount.get(Rank.ACE) == 1) counter++;
-        if(this.rankCount.get(Rank.KING) == 1) counter++;
-        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
-        if(this.rankCount.get(Rank.JACK) == 1) counter++;
-        if(this.rankCount.get(Rank.TEN) == 1) counter++;
+        if(this.rankCount.get(Rank.ACE) >= 1) counter++;
+        if(this.rankCount.get(Rank.KING) >= 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) >= 1) counter++;
+        if(this.rankCount.get(Rank.JACK) >= 1) counter++;
+        if(this.rankCount.get(Rank.TEN) >= 1) counter++;
 
         if(counter >= 3) aux = true;
         boolean toreturn = aux && is3TF;
@@ -1602,9 +1606,9 @@ public class CanHoldCards extends State {
         int gapCounter = 0;
 
         for (Rank r1 : Rank.values()) {
-            if (this.suitCount.get(r1) == 3) {
+            if (this.belongsTo(r1)) {
                 for (Rank r2 : Rank.values()) {
-                    if (this.suitCount.get(r2) == 3 && r1 != r2 && (r2.ordinal() > r1.ordinal())) {
+                    if (this.belongsTo(r2) && r1 != r2 && (r2.ordinal() > r1.ordinal())) {
 
                         if (Math.abs(r1.ordinal() - r2.ordinal()) > 1) {
                             gapCounter++;
@@ -1616,6 +1620,21 @@ public class CanHoldCards extends State {
         }
 
         return gapCounter;
+
+    }
+
+    private boolean belongsTo(Rank rank){
+
+        Player player = this.match.getPlayer();
+
+        for (Card c : player.getHand()) {
+            if(c.getRank()== rank){
+                if(this.suitCount.get(c.getSuit()) == 3){
+                    return true;
+                }
+            }
+        }
+        return false;
 
     }
 
