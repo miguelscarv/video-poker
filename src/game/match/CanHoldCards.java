@@ -1,11 +1,15 @@
 package game.match;
 
 import command.FullCommand;
+import game.match.Match;
+import game.match.Payout;
+import game.match.State;
 import player.Player;
 import player.cards.Card;
 import player.cards.Deck;
 import player.cards.Rank;
 import player.cards.Suit;
+import game.match.IllegalException;
 
 import java.util.*;
 
@@ -20,10 +24,13 @@ public class CanHoldCards extends State {
         this.setCountersToZero();
     }
 
+
+
     @Override
     public void bet(FullCommand command) throws IllegalException {
         throw new IllegalException("b");
     }
+
 
     @Override
     public void dealCards() throws IllegalException {
@@ -267,12 +274,14 @@ public class CanHoldCards extends State {
     public int[] getAdvice(){
 
         Player player = super.match.getPlayer();
-        Card[] cards = player.getHand();
+        Deck deck = super.match.getDeck();
 
         for (Card c : player.getHand()) {
             this.suitCount.put(c.getSuit(), this.suitCount.get(c.getSuit()) + 1);
             this.rankCount.put(c.getRank(), this.rankCount.get(c.getRank()) + 1);
         }
+
+
 
         boolean isFlush = this.isFlush();
         boolean isJacksOrBetter = this.isJacksOrBetter();
@@ -286,47 +295,669 @@ public class CanHoldCards extends State {
 
         boolean isFourToARoyalFlush = this.isFourToARoyalFlush();
         boolean isThreeAces = isThreeOfAKind && this.rankCount.get(Rank.ACE) == 3;
+        boolean isFourToAStraightFlush = this.isFourToAStraightFlush();
+        boolean isFourToFlush = this.isFourToFlush();
+        boolean isThreeToARoyalFlush = this.isThreeToARoyalFlush();
+        boolean isFourToAnOutsideStraight = this.isFourToAnOutsideStraight();
+        boolean isLowPair = this.isLowPair();
+        boolean isAKQJUnsuited = this.isAKQJUnsuited();
+        boolean isThreeToAStraightFlush1 = this.isThreeToAStraightFlush1();
+        boolean isFourToAnInsideStraightWithThreeHighCards = this.isFourToAnInsideStraightWithThreeHighCards();
+        boolean isQJSuited = this.isQJSuited();
+        boolean isThreeToAFlushWithTwoHighCards = this.isThreeToAFlushWithTwoHighCards();
+        boolean isTwoSuitedHighCards = this.isTwoSuitedHighCards();
+        boolean isFourToAnInsideStraightWithTwoHighCards = this.isFourToAnInsideStraightWithTwoHighCards();
+        boolean isThreeToAStraightFlush2 = this.isThreeToAStraightFlush2();
+        boolean isFourToAnInsideStraightWithOneHighCards = this.isFourToAnInsideStraightWithOneHighCards();
+        boolean isKQJUnsuited = this.isKQJUnsuited();
+        boolean isJTSuited = this.isJTSuited();
+        boolean isQJUnsuited = this.isQJUnsuited();
+        boolean isThreeToAFlushWithOneHighCard = this.isThreeToAFlushWithOneHighCard();
+        boolean isQTSuited = this.isQTSuited();
+        boolean isThreeToAStraightFlush3 = this.isThreeToAStraightFlush3();
+        boolean isKQUnsuited = this.isKQUnsuited();
+        boolean isKJUnsuited = this.isKJUnsuited();
+        boolean isAce = this.isAce();
+        boolean isKTSuited = this.isKTSuited();
+        boolean isJQK = this.isJQK();
+        boolean isFourToAnInsideStraightWithNoHighCards = this.isFourToAnInsideStraightWithNoHighCards();
+        boolean isThreeToAFlushWithNoHighCard = this.isThreeToAFlushWithNoHighCard();
 
-        int[] indexArray;
 
-        if (isRoyalFlush || isStraightFlush || isFourOfAKind || isFullHouse || isFlush || isFiveConsecutiveCards) {
 
-            indexArray = new int[]{1,2,3,4,5};
+
+        if (isRoyalFlush || isStraightFlush || isFourOfAKind) {
+
+            int[] indexArray = new int[]{1,2,3,4,5};
+            return indexArray;
 
         } else if (isFourToARoyalFlush) {
 
-            //falta implementar
+            int[] indexArray = new int[4];
+
+            int index = 0;
+            Card[] card = player.getHand();
+
+            if(this.isFlush()){
+
+
+                for (int i=0; i<5; i++) {
+                    if(card[i].getRank() == Rank.ACE ||
+                            card[i].getRank() == Rank.KING ||
+                            card[i].getRank() == Rank.QUEEN ||
+                            card[i].getRank() == Rank.JACK ||
+                            card[i].getRank() == Rank.TEN){
+                        indexArray[index++] = i+1;
+                    }
+                }
+
+
+            }else{
+
+                Suit suit = this.getNumberOfAKindSuit(4);
+
+                for (int i=0; i<5; i++) {
+
+                    if(card[i].getSuit() == suit ){
+                        indexArray[index++] = i+1;
+                    }
+                }
+
+            }
+
+            return indexArray;
+
 
         } else if (isThreeAces) {
 
-            indexArray = new int[3];
+            int[] indexArray = new int[3];
             int index = 0;
-
+            Card[] card = player.getHand();
             for (int i=0; i<5; i++) {
-                if(cards[i].getRank() == Rank.ACE){
+                if(card[i].getRank() == Rank.ACE){
                     indexArray[index++] = i+1;
                 }
             }
 
+            return indexArray;
+
+
+        } else if (isFullHouse || isFlush || isFiveConsecutiveCards) {
+
+            int[] indexArray = new int[]{1,2,3,4,5};
+            return indexArray;
 
         } else if (isThreeOfAKind) {
 
             Rank rank = this.getThreeOfAKindRank();
 
-            indexArray = new int[3];
+            int[] indexArray = new int[3];
             int index = 0;
-
+            Card[] card = player.getHand();
             for (int i=0; i<5; i++) {
-                if(cards[i].getRank() == rank){
+
+                if(card[i].getRank() == rank ){
                     indexArray[index++] = i+1;
                 }
             }
 
+            return indexArray;
+
+        } else if (isFourToAStraightFlush) {
+
+            Suit suit = this.getNumberOfAKindSuit(4);
+
+            int[] indexArray = new int[4];
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
         } else if (isTwoPair) {
+
+            int[] indexArray = new int[4];
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (Rank r : Rank.values()) {
+                if (this.rankCount.get(r) == 2) {
+                    for (int i = 0; i < 5; i++) {
+
+                        if (card[i].getRank() == r) {
+                            indexArray[index++] = i + 1;
+                        }
+                    }
+                }
+            }
+
+            Arrays.sort(indexArray);
+
+            return indexArray;
+
 
         } else if (isJacksOrBetter) {
 
+            int[] indexArray = new int[2];
+
+            Rank rank = this.getPairRank();
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == rank) {
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+
+        } else if (isFourToFlush) {
+
+            Suit suit = this.getNumberOfAKindSuit(4);
+
+            int[] indexArray = new int[4];
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isThreeToARoyalFlush) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+
+        } else if (isFourToAnOutsideStraight) {
+
+            int[] indexArray = new int[4];
+            int outsideIndex = 0;
+            int possibleOutsideIndex = 0;
+            int counter = 0;
+
+            Card[] card = player.getHand();
+                for(int j=1; j<5; j++){
+
+                    if( Math.abs((card[0].getRank()).ordinal() - (card[j].getRank()).ordinal()) > 3 ){
+                        possibleOutsideIndex = j;
+                        counter++;
+                    }
+
+                }
+
+                if(counter > 1) outsideIndex = 0;
+                else outsideIndex = possibleOutsideIndex;
+
+
+            for (int i=0; i<5; i++) {
+                if(i != outsideIndex)
+                    indexArray[i] = i+1;
+            }
+
+            return indexArray;
+
+
+        } else if (isLowPair) {
+
+            int[] indexArray = new int[2];
+
+            Rank rank = this.getPairRank();
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == rank) {
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+
+        } else if (isAKQJUnsuited) {
+
+            int[] indexArray = new int[4];
+
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.ACE ||
+                        card[i].getRank() == Rank.KING ||
+                        card[i].getRank() == Rank.QUEEN ||
+                        card[i].getRank() == Rank.JACK) {
+
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+
+        } else if (isThreeToAStraightFlush1) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+
+
+        } else if (isFourToAnInsideStraightWithThreeHighCards) {
+
+            int[] indexArray = new int[4];
+            int outsideIndex = 0;
+            int possibleOutsideIndex = 0;
+            int counter = 0;
+
+            Card[] card = player.getHand();
+            for(int j=1; j<5; j++){
+
+                if( Math.abs((card[0].getRank()).ordinal() - (card[j].getRank()).ordinal()) > 4 ){
+                    possibleOutsideIndex = j;
+                    counter++;
+                }
+
+            }
+
+            if(counter > 1) outsideIndex = 0;
+            else outsideIndex = possibleOutsideIndex;
+
+
+            for (int i=0; i<5; i++) {
+                if(i != outsideIndex)
+                    indexArray[i] = i+1;
+            }
+
+            return indexArray;
+
+        } else if (isQJSuited) {
+
+            int[] indexArray = new int[2];
+
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.QUEEN ||
+                        card[i].getRank() == Rank.JACK) {
+
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+
+        } else if (isThreeToAFlushWithTwoHighCards) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isTwoSuitedHighCards) {
+
+            int[] indexArray = new int[2];
+            int index = 0;
+
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+                if(this.suitCount.get(card[i].getSuit()) == 2) {
+                    if(card[i].getRank()==Rank.JACK || card[i].getRank()==Rank.QUEEN
+                            || card[i].getRank()==Rank.KING || card[i].getRank()==Rank.ACE){
+
+                        indexArray[index++] = i+1;
+                    }
+                }
+            }
+
+        } else if (isFourToAnInsideStraightWithTwoHighCards) {
+
+            int[] indexArray = new int[4];
+            int outsideIndex = 0;
+            int possibleOutsideIndex = 0;
+            int counter = 0;
+
+            Card[] card = player.getHand();
+            for(int j=1; j<5; j++){
+
+                if( Math.abs((card[0].getRank()).ordinal() - (card[j].getRank()).ordinal()) > 4 ){
+                    possibleOutsideIndex = j;
+                    counter++;
+                }
+
+            }
+
+            if(counter > 1) outsideIndex = 0;
+            else outsideIndex = possibleOutsideIndex;
+
+
+            for (int i=0; i<5; i++) {
+                if(i != outsideIndex)
+                    indexArray[i] = i+1;
+            }
+
+            return indexArray;
+
+        } else if (isThreeToAStraightFlush2) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isFourToAnInsideStraightWithOneHighCards) {
+
+            int[] indexArray = new int[4];
+            int outsideIndex = 0;
+            int possibleOutsideIndex = 0;
+            int counter = 0;
+
+            Card[] card = player.getHand();
+            for(int j=1; j<5; j++){
+
+                if( Math.abs((card[0].getRank()).ordinal() - (card[j].getRank()).ordinal()) > 4 ){
+                    possibleOutsideIndex = j;
+                    counter++;
+                }
+
+            }
+
+            if(counter > 1) outsideIndex = 0;
+            else outsideIndex = possibleOutsideIndex;
+
+
+            for (int i=0; i<5; i++) {
+                if(i != outsideIndex)
+                    indexArray[i] = i+1;
+            }
+
+            return indexArray;
+
+        } else if (isKQJUnsuited) {
+
+            int[] indexArray = new int[3];
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getRank() == Rank.KING ||
+                        card[i].getRank() == Rank.QUEEN ||
+                        card[i].getRank() == Rank.JACK){
+
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isJTSuited) {
+
+            int[] indexArray = new int[2];
+
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.JACK ||
+                        card[i].getRank() == Rank.TEN) {
+
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isQJUnsuited) {
+
+            int[] indexArray = new int[2];
+
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.QUEEN ||
+                        card[i].getRank() == Rank.JACK) {
+
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isThreeToAFlushWithOneHighCard) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isQTSuited) {
+
+            int[] indexArray = new int[2];
+
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.QUEEN ||
+                        card[i].getRank() == Rank.TEN) {
+
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isThreeToAStraightFlush3) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isKQUnsuited || isKJUnsuited) {
+
+            int[] indexArray = new int[2];
+
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.KING ||
+                        card[i].getRank() == Rank.QUEEN ||
+                        card[i].getRank() == Rank.JACK) {
+
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isAce) {
+
+            int[] indexArray = new int[1];
+
+            Card[] card = player.getHand();
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.ACE) {
+
+                    indexArray[0] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isKTSuited) {
+
+            int[] indexArray = new int[2];
+
+            Card[] card = player.getHand();
+            int index = 0;
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.KING ||
+                        card[i].getRank() == Rank.TEN) {
+
+                    indexArray[index++] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isJQK) {
+
+            int[] indexArray = new int[1];
+
+            Card[] card = player.getHand();
+
+            for (int i = 0; i < 5; i++) {
+
+                if (card[i].getRank() == Rank.JACK||
+                        card[i].getRank() == Rank.QUEEN ||
+                        card[i].getRank() == Rank.KING) {
+
+                    indexArray[0] = i + 1;
+                }
+            }
+
+            return indexArray;
+
+        } else if (isFourToAnInsideStraightWithNoHighCards) {
+
+            int[] indexArray = new int[4];
+            int outsideIndex = 0;
+            int possibleOutsideIndex = 0;
+            int counter = 0;
+
+            Card[] card = player.getHand();
+            for(int j=1; j<5; j++){
+
+                if( Math.abs((card[0].getRank()).ordinal() - (card[j].getRank()).ordinal()) > 4 ){
+                    possibleOutsideIndex = j;
+                    counter++;
+                }
+
+            }
+
+            if(counter > 1) outsideIndex = 0;
+            else outsideIndex = possibleOutsideIndex;
+
+
+            for (int i=0; i<5; i++) {
+                if(i != outsideIndex)
+                    indexArray[i] = i+1;
+            }
+
+            return indexArray;
+
+        } else if (isThreeToAFlushWithNoHighCard) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+
         } else {
+
 
         }
 
@@ -349,11 +980,694 @@ public class CanHoldCards extends State {
 
     private boolean isFourToARoyalFlush() {
 
+        boolean is4TF = this.isFourToFlush();
+        int counter = 0;
+        boolean aux = false;
+
+        if(this.rankCount.get(Rank.ACE) == 1) counter++;
+        if(this.rankCount.get(Rank.KING) == 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
+        if(this.rankCount.get(Rank.JACK) == 1) counter++;
+        if(this.rankCount.get(Rank.TEN) == 1) counter++;
+
+        if(counter >= 4) aux = true;
+        boolean toreturn = aux && is4TF;
+
+        return toreturn;
+
+
+    }
+
+    private boolean isFourToAStraightFlush() {
+
+        boolean is4TF = this.isFourToFlush();
+        boolean is4TS = this.isFourToAnInsideStraight() || this.isFourToAnOutsideStraight();
+
+        return is4TS && is4TF;
+
+    }
+
+    private boolean isFourToFlush() {
+
+        boolean is4TF = this.suitCount.get(Suit.CLUBS) >= 4 ||
+                this.suitCount.get(Suit.DIAMONDS) >= 4 ||
+                this.suitCount.get(Suit.HEARTS) >= 4 ||
+                this.suitCount.get(Suit.SPADES) >= 4;
+
+        return is4TF;
+
+    }
+
+    private boolean isThreeToFlush() {
+
+        boolean is3TF = this.suitCount.get(Suit.CLUBS) >= 3 ||
+                this.suitCount.get(Suit.DIAMONDS) >= 3 ||
+                this.suitCount.get(Suit.HEARTS) >= 3 ||
+                this.suitCount.get(Suit.SPADES) >= 3;
+
+        return is3TF;
+
+    }
+
+
+
+    private boolean isThreeToARoyalFlush() {
+
+
+        boolean is3TF = this.isThreeToFlush();
+        int counter = 0;
+        boolean aux = false;
+
+        if(this.rankCount.get(Rank.ACE) == 1) counter++;
+        if(this.rankCount.get(Rank.KING) == 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
+        if(this.rankCount.get(Rank.JACK) == 1) counter++;
+        if(this.rankCount.get(Rank.TEN) == 1) counter++;
+
+        if(counter >= 3) aux = true;
+        boolean toreturn = aux && is3TF;
+
+        return toreturn;
+
+
+    }
+
+    private boolean isFourToAnOutsideStraight() {
+
+
+        int counter = 0;
+        boolean toReturn = false;
+
+        for (Rank r : Rank.values()) {
+            if (this.rankCount.get(r) == 1) {
+                counter++;
+            } else {
+                counter = 0;
+            }
+
+            if (counter == 4) {
+                toReturn = true;
+            }
+        }
+
+        boolean isException = this.rankCount.get(Rank.JACK) == 1 &&
+                this.rankCount.get(Rank.QUEEN) == 1 &&
+                this.rankCount.get(Rank.KING) == 1 &&
+                this.rankCount.get(Rank.ACE) == 1;
+
+
+        return toReturn && (!isException);
+
+
+    }
+
+    private boolean isFourToAnInsideStraight() {
+
+        boolean isFTIS = (this.rankCount.get(Rank.JACK) == 1 &&
+                this.rankCount.get(Rank.QUEEN) == 1 &&
+                this.rankCount.get(Rank.KING) == 1 &&
+                this.rankCount.get(Rank.ACE) == 1) ||
+                        (this.rankCount.get(Rank.TWO) == 1 &&
+                        this.rankCount.get(Rank.THREE) == 1 &&
+                        this.rankCount.get(Rank.FOUR) == 1 &&
+                        this.rankCount.get(Rank.ACE) == 1);
+
+
+        int[] counter = new int[5];
+        boolean toReturn = false;
+        Player player = this.match.getPlayer();
+        int finalCounter = 0;
+
+        Card[] card = player.getHand();
+
+
+        for(int i=0; i<5; i++){
+            for(int j=0; j<5; j++) {
+
+                if(j!=i) {
+
+                    if (Math.abs((card[i].getRank()).ordinal() - (card[j].getRank()).ordinal()) <= 4) {
+                        counter[i]++;
+                    }
+                }
+            }
+        }
+
+        for(int i=0; i<5; i++){
+            if(counter[i] == 3)
+                finalCounter++;
+        }
+
+        if(finalCounter == 4) toReturn = true;
+
+
+        return toReturn || isFTIS;
+
+
+    }
+
+    private boolean isLowPair() {
+
+    	boolean isLowPair = this.rankCount.get(Rank.TWO) == 2 ||
+                this.rankCount.get(Rank.THREE) == 2 ||
+                this.rankCount.get(Rank.FOUR) == 2 ||
+                this.rankCount.get(Rank.FIVE) == 2 || 
+        		this.rankCount.get(Rank.SIX) == 2 ||
+                this.rankCount.get(Rank.SEVEN) == 2 ||
+                this.rankCount.get(Rank.EIGHT) == 2 ||
+                this.rankCount.get(Rank.NINE) == 2 ||
+                this.rankCount.get(Rank.TEN) == 2;
+    	
+        return isLowPair;
+
+
+    }
+
+    private boolean isAKQJUnsuited(){
+    	boolean isAKQJUnsuited = this.rankCount.get(Rank.ACE)==1 && 
+    			this.rankCount.get(Rank.KING)==1 && this.rankCount.get(Rank.QUEEN)==1 &&
+    			this.rankCount.get(Rank.JACK)==1; 
+
+        return isAKQJUnsuited;
+
+
+    }
+
+    private boolean isThreeToAStraightFlush1(){
+
+        boolean is3TF = this.isThreeToFlush();
+
+        if(is3TF) {
+
+            Player player = this.match.getPlayer();
+            int highCardCounter = 0;
+            int gapCounter = 0;
+
+            for (Card c : player.getHand()) {
+                if (this.suitCount.get(c.getSuit()) == 3) {
+                    if (c.getRank() == Rank.JACK || c.getRank() == Rank.QUEEN
+                            || c.getRank() == Rank.KING || c.getRank() == Rank.ACE) {
+
+                        highCardCounter++;
+                    }
+                }
+            }
+
+            int counter = 0;
+            boolean toReturn = false;
+
+            if (highCardCounter == 0) {
+
+
+                for (Rank r : Rank.values()) {
+                    if (this.rankCount.get(r) == 1) {
+                        counter++;
+                    } else {
+                        counter = 0;
+                    }
+
+                    if (counter == 3) {
+                        toReturn = true;
+                    }
+                }
+
+                boolean isException = this.rankCount.get(Rank.TWO) == 1 &&
+                        this.rankCount.get(Rank.THREE) == 1 && this.rankCount.get(Rank.FOUR) == 1;
+
+
+                return toReturn && (!isException);
+
+            } else if (highCardCounter == 1) {
+
+
+                gapCounter = this.getNumberOfGaps();
+
+                if(gapCounter <= 1) return true;
+
+
+            } else {
+
+
+                gapCounter = this.getNumberOfGaps();
+
+                if(gapCounter <= 2) return true;
+
+            }
+
+        }
+
 
         return false;
 
 
     }
+
+    private boolean isFourToAnInsideStraightWithThreeHighCards(){
+
+        boolean is4TIS = this.isFourToAnInsideStraight();
+        int counter = 0;
+        boolean toReturn = false;
+
+        if(this.rankCount.get(Rank.ACE) == 1) counter++;
+        if(this.rankCount.get(Rank.KING) == 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
+        if(this.rankCount.get(Rank.JACK) == 1) counter++;
+
+        if(counter >= 3) toReturn = true;
+
+
+        return is4TIS && toReturn ;
+
+
+    }
+
+    private boolean isQJSuited() {
+
+        if (this.rankCount.get(Rank.JACK) == 1 && this.rankCount.get(Rank.QUEEN) == 1) {
+            Player player = this.match.getPlayer();
+            Suit s1 = Suit.CLUBS, s2 = Suit.CLUBS;
+
+            for (Card c : player.getHand()) {
+                if (c.getRank() == Rank.JACK) {
+                    s1 = c.getSuit();
+                } else if (c.getRank() == Rank.QUEEN) {
+                    s2 = c.getSuit();
+                }
+            }
+
+                return s1 == s2;
+
+        }
+        return false;
+    }
+
+    private boolean isThreeToAFlushWithTwoHighCards(){
+    	
+    	Player player = this.match.getPlayer();
+    	int counter = 0;
+    	int high = 0;
+    	
+    	for (Card c : player.getHand()) {
+            if(this.suitCount.get(c.getSuit()) >= 3) {
+            	if(c.getRank()==Rank.JACK || c.getRank()==Rank.QUEEN
+            			|| c.getRank()==Rank.KING || c.getRank()==Rank.ACE){
+            		if(high>1) {
+            			return false;
+            		}else {
+            			high++;
+            		}
+            	}else {
+            		counter++;
+            	}
+            }
+        }
+
+    	return counter==3;
+
+    }
+
+    private boolean isTwoSuitedHighCards(){
+
+        Player player = this.match.getPlayer();
+        int high = 0;
+
+        for (Card c : player.getHand()) {
+            if(this.suitCount.get(c.getSuit()) == 2) {
+                if(c.getRank()==Rank.JACK || c.getRank()==Rank.QUEEN
+                        || c.getRank()==Rank.KING || c.getRank()==Rank.ACE){
+
+                    high++;
+                }
+            }
+        }
+
+            if(high == 2) return true;
+            else return false;
+
+    }
+
+    private boolean isFourToAnInsideStraightWithTwoHighCards(){
+
+        boolean is4TIS = this.isFourToAnInsideStraight();
+        int counter = 0;
+        boolean toReturn = false;
+
+        if(this.rankCount.get(Rank.ACE) == 1) counter++;
+        if(this.rankCount.get(Rank.KING) == 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
+        if(this.rankCount.get(Rank.JACK) == 1) counter++;
+
+        if(counter >= 2) toReturn = true;
+
+
+        return is4TIS && toReturn ;
+
+
+    }
+
+    private boolean isThreeToAStraightFlush2(){
+
+        boolean is3TF = this.isThreeToFlush();
+
+        if(is3TF) {
+
+            Player player = this.match.getPlayer();
+            int highCardCounter = 0;
+            int gapCounter = 0;
+
+            for (Card c : player.getHand()) {
+                if (this.suitCount.get(c.getSuit()) == 3) {
+                    if (c.getRank() == Rank.JACK || c.getRank() == Rank.QUEEN
+                            || c.getRank() == Rank.KING || c.getRank() == Rank.ACE) {
+
+                        highCardCounter++;
+                    }
+                }
+            }
+
+            gapCounter = this.getNumberOfGaps();
+            boolean isOneGap = false;
+            boolean isTwoGapsOneHighCard = false;
+            boolean isInclusion1 = false;
+            boolean isInclusion2 = false;
+
+
+            if (highCardCounter == 1 && gapCounter == 2) isTwoGapsOneHighCard = true;
+            if (highCardCounter == 0 && gapCounter == 1) isOneGap = true;
+
+            isInclusion1 = (this.rankCount.get(Rank.TWO) == 1 &&
+                    this.rankCount.get(Rank.THREE) == 1 && this.rankCount.get(Rank.FOUR) == 1);
+
+            isInclusion2 = (this.rankCount.get(Rank.ACE) == 1) && (gapCounter <=2);
+
+            return isInclusion1 || isInclusion2 || isOneGap || isTwoGapsOneHighCard;
+
+
+        }
+
+
+        return false;
+
+
+    }
+
+
+
+    private boolean isFourToAnInsideStraightWithOneHighCards(){
+
+        boolean is4TIS = this.isFourToAnInsideStraight();
+        int counter = 0;
+        boolean toReturn = false;
+
+        if(this.rankCount.get(Rank.ACE) == 1) counter++;
+        if(this.rankCount.get(Rank.KING) == 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
+        if(this.rankCount.get(Rank.JACK) == 1) counter++;
+
+        if(counter >= 1) toReturn = true;
+
+
+        return is4TIS && toReturn ;
+
+
+    }
+
+    private boolean isKQJUnsuited(){
+
+
+        return (this.rankCount.get(Rank.KING) == 1 &&
+                this.rankCount.get(Rank.QUEEN) == 1 &&
+                this.rankCount.get(Rank.JACK) == 1);
+    }
+
+
+    private boolean isJTSuited(){
+    	//i might have overcomplicated
+    	
+    	boolean isJTSuited = false;
+    	Player player = this.match.getPlayer();
+    	Suit s1 = Suit.CLUBS, s2 = Suit.CLUBS;
+    	boolean j = false;
+    	boolean t = false;
+    	
+    	for (Card c : player.getHand()) {
+            if(c.getRank() == Rank.JACK) {
+            	j = true;
+            	s1 = c.getSuit();
+            }else if(c.getRank() == Rank.TEN) {
+            	t = true;
+            	s2 = c.getSuit();
+            }
+        }
+    	
+    	if(j && t) {
+    		return s1==s2;
+    	}else {
+    		return false;
+    	}
+
+
+    }
+
+    private boolean isQJUnsuited(){
+
+
+        return (this.rankCount.get(Rank.QUEEN) == 1 &&
+                this.rankCount.get(Rank.JACK) == 1);
+
+    }
+
+
+
+    private boolean isThreeToAFlushWithOneHighCard(){
+    	Player player = this.match.getPlayer();
+    	int counter = 0;
+    	int high = 0;
+    	
+    	for (Card c : player.getHand()) {
+            if (this.suitCount.get(c.getSuit()) >= 3) {
+                if (c.getRank() == Rank.JACK || c.getRank() == Rank.QUEEN
+                        || c.getRank() == Rank.KING || c.getRank() == Rank.ACE) {
+                    if (high > 0) {
+                        return false;
+                    } else {
+                        high++;
+                    }
+
+                }
+            }
+        }
+    	
+        
+    	return high==1;
+
+
+    }
+
+    private boolean isQTSuited(){
+
+
+        if (this.rankCount.get(Rank.QUEEN) == 1 && this.rankCount.get(Rank.TEN) == 1) {
+            Player player = this.match.getPlayer();
+            Suit s1 = Suit.CLUBS, s2 = Suit.CLUBS;
+
+            for (Card c : player.getHand()) {
+                if (c.getRank() == Rank.QUEEN) {
+                    s1 = c.getSuit();
+                } else if (c.getRank() == Rank.TEN) {
+                    s2 = c.getSuit();
+                }
+            }
+
+            return s1 == s2;
+
+        }
+        return false;
+    }
+
+
+    private boolean isThreeToAStraightFlush3(){
+
+        boolean is3TF = this.isThreeToFlush();
+
+        if(is3TF) {
+
+            Player player = this.match.getPlayer();
+            int highCardCounter = 0;
+            int gapCounter = 0;
+
+            for (Card c : player.getHand()) {
+                if (this.suitCount.get(c.getSuit()) == 3) {
+                    if (c.getRank() == Rank.JACK || c.getRank() == Rank.QUEEN
+                            || c.getRank() == Rank.KING || c.getRank() == Rank.ACE) {
+
+                        highCardCounter++;
+                    }
+                }
+            }
+
+            gapCounter = this.getNumberOfGaps();
+
+            return (gapCounter == 2) && (highCardCounter == 0);
+
+
+        }
+
+
+        return false;
+
+
+    }
+
+
+    private boolean isKQUnsuited(){
+
+
+        return (this.rankCount.get(Rank.KING) == 1 &&
+                this.rankCount.get(Rank.QUEEN) == 1);
+
+    }
+
+    private boolean isKJUnsuited(){
+
+
+        return (this.rankCount.get(Rank.KING) == 1 &&
+                this.rankCount.get(Rank.JACK) == 1);
+
+    }
+
+    private boolean isAce(){
+
+    	boolean isAce = this.rankCount.get(Rank.ACE) == 1;
+        return isAce;
+
+
+    }
+
+    private boolean isKTSuited(){
+
+        if (this.rankCount.get(Rank.KING) == 1 && this.rankCount.get(Rank.TEN) == 1) {
+            Player player = this.match.getPlayer();
+            Suit s1 = Suit.CLUBS, s2 = Suit.CLUBS;
+
+            for (Card c : player.getHand()) {
+                if (c.getRank() == Rank.KING) {
+                    s1 = c.getSuit();
+                } else if (c.getRank() == Rank.TEN) {
+                    s2 = c.getSuit();
+                }
+            }
+
+            return s1 == s2;
+
+        }
+        return false;
+    }
+
+    private boolean isJQK(){
+
+    	boolean isJQK = this.rankCount.get(Rank.JACK) == 1 || 
+    			this.rankCount.get(Rank.QUEEN) == 1 ||
+    			this.rankCount.get(Rank.KING) == 1;
+    	
+    	return isJQK;
+
+
+    }
+
+    private boolean isFourToAnInsideStraightWithNoHighCards(){
+
+        boolean is4TIS = this.isFourToAnInsideStraight();
+        int counter = 0;
+        boolean toReturn = false;
+
+        if(this.rankCount.get(Rank.ACE) == 1) counter++;
+        if(this.rankCount.get(Rank.KING) == 1) counter++;
+        if(this.rankCount.get(Rank.QUEEN) == 1) counter++;
+        if(this.rankCount.get(Rank.JACK) == 1) counter++;
+
+        if(counter == 0) toReturn = true;
+
+
+        return is4TIS && toReturn ;
+
+
+    }
+
+    private boolean isThreeToAFlushWithNoHighCard(){
+    	 
+    	Player player = this.match.getPlayer();
+    	int counter = 0;
+    	
+    	for (Card c : player.getHand()) {
+            if(this.suitCount.get(c.getSuit()) >= 3) {
+            	if(c.getRank()==Rank.JACK || c.getRank()==Rank.QUEEN
+            			|| c.getRank()==Rank.KING || c.getRank()==Rank.ACE) {
+            		return false;
+            	}else {
+            		counter++;
+            	}
+            }
+        }
+    	
+        
+    	return counter==3;
+
+    }
+
+
+    private Suit getNumberOfAKindSuit(int number){
+
+        for (Suit s: this.suitCount.keySet()){
+            if (this.suitCount.get(s) >= number){
+                return s;
+            }
+        }
+
+        return null;
+    }
+
+    private Rank getPairRank(){
+
+        if(this.rankCount.get(Rank.JACK) == 2) return Rank.JACK;
+        if(this.rankCount.get(Rank.QUEEN) == 2) return Rank.QUEEN;
+        if(this.rankCount.get(Rank.KING) == 2) return Rank.KING;
+        if(this.rankCount.get(Rank.ACE) == 2) return Rank.ACE;
+        if(this.rankCount.get(Rank.TWO) == 2) return Rank.TWO;
+        if(this.rankCount.get(Rank.THREE) == 2) return Rank.THREE;
+        if(this.rankCount.get(Rank.FOUR) == 2) return Rank.FOUR;
+        if(this.rankCount.get(Rank.FIVE) == 2) return Rank.FIVE;
+        if(this.rankCount.get(Rank.SIX) == 2) return Rank.SIX;
+        if(this.rankCount.get(Rank.SEVEN) == 2) return Rank.SEVEN;
+        if(this.rankCount.get(Rank.EIGHT) == 2) return Rank.EIGHT;
+        if(this.rankCount.get(Rank.NINE) == 2) return Rank.NINE;
+        if(this.rankCount.get(Rank.TEN) == 2) return Rank.TEN;
+
+        return null;
+    }
+
+    private int getNumberOfGaps() {
+
+        int gapCounter = 0;
+
+        for (Rank r1 : Rank.values()) {
+            if (this.suitCount.get(r1) == 3) {
+                for (Rank r2 : Rank.values()) {
+                    if (this.suitCount.get(r2) == 3 && r1 != r2 && (r2.ordinal() > r1.ordinal())) {
+
+                        if (Math.abs(r1.ordinal() - r2.ordinal()) > 1) {
+                            gapCounter++;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        return gapCounter;
+
+    }
+
 
     private Rank getThreeOfAKindRank(){
 
