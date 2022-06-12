@@ -79,7 +79,7 @@ public class CanHoldCards extends State {
         String typeOfHand = this.classifyHand();
         if (this.match.getIsDebugMode()) {
             System.out.println("player\'s hand " + Arrays.toString(player.getHand()));
-            //System.out.println("Hand type: " + typeOfHand);
+            System.out.println("Hand type: " + typeOfHand);
         }
 
         if (typeOfHand.equals("Royal Flush")) {
@@ -274,7 +274,6 @@ public class CanHoldCards extends State {
     public int[] getAdvice(){
 
         Player player = super.match.getPlayer();
-        Deck deck = super.match.getDeck();
 
         for (Card c : player.getHand()) {
             this.suitCount.put(c.getSuit(), this.suitCount.get(c.getSuit()) + 1);
@@ -323,17 +322,16 @@ public class CanHoldCards extends State {
         boolean isFourToAnInsideStraightWithNoHighCards = this.isFourToAnInsideStraightWithNoHighCards();
         boolean isThreeToAFlushWithNoHighCard = this.isThreeToAFlushWithNoHighCard();
 
-
+        int[] indexArray;
 
 
         if (isRoyalFlush || isStraightFlush || isFourOfAKind) {
 
-            int[] indexArray = new int[]{1,2,3,4,5};
-            return indexArray;
+            indexArray = new int[]{1,2,3,4,5};
 
         } else if (isFourToARoyalFlush) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
 
             int index = 0;
             Card[] card = player.getHand();
@@ -365,33 +363,28 @@ public class CanHoldCards extends State {
 
             }
 
-            return indexArray;
 
 
         } else if (isThreeAces) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
             int index = 0;
             Card[] card = player.getHand();
             for (int i=0; i<5; i++) {
-                if(card[i].getRank() == Rank.ACE){
-                    indexArray[index++] = i+1;
+                if (card[i].getRank() == Rank.ACE) {
+                    indexArray[index++] = i + 1;
                 }
             }
 
-            return indexArray;
-
-
         } else if (isFullHouse || isFlush || isFiveConsecutiveCards) {
 
-            int[] indexArray = new int[]{1,2,3,4,5};
-            return indexArray;
+            indexArray = new int[]{1,2,3,4,5};
 
         } else if (isThreeOfAKind) {
 
             Rank rank = this.getThreeOfAKindRank();
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
             int index = 0;
             Card[] card = player.getHand();
             for (int i=0; i<5; i++) {
@@ -401,13 +394,11 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
         } else if (isFourToAStraightFlush) {
 
             Suit suit = this.getNumberOfAKindSuit(4);
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
             int index = 0;
             Card[] card = player.getHand();
             for (int i=0; i<5; i++) {
@@ -417,11 +408,9 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
         } else if (isTwoPair) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
             Card[] card = player.getHand();
             int index = 0;
 
@@ -438,12 +427,10 @@ public class CanHoldCards extends State {
 
             Arrays.sort(indexArray);
 
-            return indexArray;
-
 
         } else if (isJacksOrBetter) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Rank rank = this.getPairRank();
             Card[] card = player.getHand();
@@ -456,14 +443,12 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
 
         } else if (isFourToFlush) {
 
             Suit suit = this.getNumberOfAKindSuit(4);
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
             int index = 0;
             Card[] card = player.getHand();
             for (int i=0; i<5; i++) {
@@ -473,11 +458,9 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
         } else if (isThreeToARoyalFlush) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             Suit suit = this.getNumberOfAKindSuit(3);
 
@@ -490,12 +473,11 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
 
         } else if (isFourToAnOutsideStraight) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
+
             int outsideIndex = 0;
             int possibleOutsideIndex = 0;
             int counter = 0;
@@ -519,12 +501,10 @@ public class CanHoldCards extends State {
                     indexArray[i] = i+1;
             }
 
-            return indexArray;
-
 
         } else if (isLowPair) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Rank rank = this.getPairRank();
             Card[] card = player.getHand();
@@ -537,12 +517,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
 
         } else if (isAKQJUnsuited) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
 
             Card[] card = player.getHand();
             int index = 0;
@@ -558,12 +536,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
 
         } else if (isThreeToAStraightFlush1) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             Suit suit = this.getNumberOfAKindSuit(3);
 
@@ -576,13 +552,9 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
-
-
         } else if (isFourToAnInsideStraightWithThreeHighCards) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
             int outsideIndex = 0;
             int possibleOutsideIndex = 0;
             int counter = 0;
@@ -606,11 +578,10 @@ public class CanHoldCards extends State {
                     indexArray[i] = i+1;
             }
 
-            return indexArray;
 
         } else if (isQJSuited) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Card[] card = player.getHand();
             int index = 0;
@@ -624,12 +595,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
 
         } else if (isThreeToAFlushWithTwoHighCards) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             Suit suit = this.getNumberOfAKindSuit(3);
 
@@ -642,11 +611,9 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
         } else if (isTwoSuitedHighCards) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
             int index = 0;
 
             Card[] card = player.getHand();
@@ -662,7 +629,7 @@ public class CanHoldCards extends State {
 
         } else if (isFourToAnInsideStraightWithTwoHighCards) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
             int outsideIndex = 0;
             int possibleOutsideIndex = 0;
             int counter = 0;
@@ -686,11 +653,10 @@ public class CanHoldCards extends State {
                     indexArray[i] = i+1;
             }
 
-            return indexArray;
 
         } else if (isThreeToAStraightFlush2) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             Suit suit = this.getNumberOfAKindSuit(3);
 
@@ -703,11 +669,9 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
         } else if (isFourToAnInsideStraightWithOneHighCards) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
             int outsideIndex = 0;
             int possibleOutsideIndex = 0;
             int counter = 0;
@@ -731,11 +695,10 @@ public class CanHoldCards extends State {
                     indexArray[i] = i+1;
             }
 
-            return indexArray;
 
         } else if (isKQJUnsuited) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             int index = 0;
             Card[] card = player.getHand();
@@ -749,11 +712,9 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
         } else if (isJTSuited) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Card[] card = player.getHand();
             int index = 0;
@@ -767,11 +728,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isQJUnsuited) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Card[] card = player.getHand();
             int index = 0;
@@ -785,11 +745,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isThreeToAFlushWithOneHighCard) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             Suit suit = this.getNumberOfAKindSuit(3);
 
@@ -802,11 +761,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isQTSuited) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Card[] card = player.getHand();
             int index = 0;
@@ -820,11 +778,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isThreeToAStraightFlush3) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             Suit suit = this.getNumberOfAKindSuit(3);
 
@@ -837,11 +794,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isKQUnsuited || isKJUnsuited) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Card[] card = player.getHand();
             int index = 0;
@@ -856,11 +812,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isAce) {
 
-            int[] indexArray = new int[1];
+            indexArray = new int[1];
 
             Card[] card = player.getHand();
 
@@ -872,11 +827,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isKTSuited) {
 
-            int[] indexArray = new int[2];
+            indexArray = new int[2];
 
             Card[] card = player.getHand();
             int index = 0;
@@ -890,11 +844,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isJQK) {
 
-            int[] indexArray = new int[1];
+            indexArray = new int[1];
 
             Card[] card = player.getHand();
 
@@ -908,11 +861,10 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
 
         } else if (isFourToAnInsideStraightWithNoHighCards) {
 
-            int[] indexArray = new int[4];
+            indexArray = new int[4];
             int outsideIndex = 0;
             int possibleOutsideIndex = 0;
             int counter = 0;
@@ -936,11 +888,10 @@ public class CanHoldCards extends State {
                     indexArray[i] = i+1;
             }
 
-            return indexArray;
 
         } else if (isThreeToAFlushWithNoHighCard) {
 
-            int[] indexArray = new int[3];
+            indexArray = new int[3];
 
             Suit suit = this.getNumberOfAKindSuit(3);
 
@@ -953,16 +904,16 @@ public class CanHoldCards extends State {
                 }
             }
 
-            return indexArray;
-
 
         } else {
 
+            indexArray = new int[0];
 
         }
 
         this.setCountersToZero();
-        return new int[0];
+
+        return indexArray;
     }
 
     @Override
