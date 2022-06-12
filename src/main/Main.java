@@ -14,7 +14,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
 
-        GameMode doubleBonus710 = new DoubleBonus710(10000, "/Users/miguelcarvalho/Desktop/card-file.txt",  "/Users/miguelcarvalho/Desktop/cmd-file.txt");
+        GameMode doubleBonus710 = new DoubleBonus710(10000, "/Users/JB/Desktop/card-file.txt",  "/Users/JB/Desktop/cmd-file.txt");
 
         doubleBonus710.run();
 

@@ -425,6 +425,8 @@ public class CanHoldCards extends State {
                 }
             }
 
+            Arrays.sort(indexArray);
+
             return indexArray;
 
 
@@ -550,6 +552,23 @@ public class CanHoldCards extends State {
 
         } else if (isThreeToAStraightFlush1) {
 
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
+
+
+
         } else if (isFourToAnInsideStraightWithThreeHighCards) {
 
             int[] indexArray = new int[4];
@@ -659,6 +678,21 @@ public class CanHoldCards extends State {
             return indexArray;
 
         } else if (isThreeToAStraightFlush2) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
 
         } else if (isFourToAnInsideStraightWithOneHighCards) {
 
@@ -778,6 +812,21 @@ public class CanHoldCards extends State {
             return indexArray;
 
         } else if (isThreeToAStraightFlush3) {
+
+            int[] indexArray = new int[3];
+
+            Suit suit = this.getNumberOfAKindSuit(3);
+
+            int index = 0;
+            Card[] card = player.getHand();
+            for (int i=0; i<5; i++) {
+
+                if(card[i].getSuit() == suit ){
+                    indexArray[index++] = i+1;
+                }
+            }
+
+            return indexArray;
 
         } else if (isKQUnsuited || isKJUnsuited) {
 
@@ -1099,10 +1148,9 @@ public class CanHoldCards extends State {
 
         if(is3TF) {
 
-
-
             Player player = this.match.getPlayer();
             int highCardCounter = 0;
+            int gapCounter = 0;
 
             for (Card c : player.getHand()) {
                 if (this.suitCount.get(c.getSuit()) == 3) {
@@ -1141,11 +1189,17 @@ public class CanHoldCards extends State {
             } else if (highCardCounter == 1) {
 
 
+                gapCounter = this.getNumberOfGaps();
+
+                if(gapCounter <= 1) return true;
+
 
             } else {
 
 
+                gapCounter = this.getNumberOfGaps();
 
+                if(gapCounter <= 2) return true;
 
             }
 
@@ -1262,11 +1316,51 @@ public class CanHoldCards extends State {
 
     private boolean isThreeToAStraightFlush2(){
 
+        boolean is3TF = this.isThreeToFlush();
+
+        if(is3TF) {
+
+            Player player = this.match.getPlayer();
+            int highCardCounter = 0;
+            int gapCounter = 0;
+
+            for (Card c : player.getHand()) {
+                if (this.suitCount.get(c.getSuit()) == 3) {
+                    if (c.getRank() == Rank.JACK || c.getRank() == Rank.QUEEN
+                            || c.getRank() == Rank.KING || c.getRank() == Rank.ACE) {
+
+                        highCardCounter++;
+                    }
+                }
+            }
+
+            gapCounter = this.getNumberOfGaps();
+            boolean isOneGap = false;
+            boolean isTwoGapsOneHighCard = false;
+            boolean isInclusion1 = false;
+            boolean isInclusion2 = false;
+
+
+            if (highCardCounter == 1 && gapCounter == 2) isTwoGapsOneHighCard = true;
+            if (highCardCounter == 0 && gapCounter == 1) isOneGap = true;
+
+            isInclusion1 = (this.rankCount.get(Rank.TWO) == 1 &&
+                    this.rankCount.get(Rank.THREE) == 1 && this.rankCount.get(Rank.FOUR) == 1);
+
+            isInclusion2 = (this.rankCount.get(Rank.ACE) == 1) && (gapCounter <=2);
+
+            return isInclusion1 || isInclusion2 || isOneGap || isTwoGapsOneHighCard;
+
+
+        }
+
 
         return false;
 
 
     }
+
+
 
     private boolean isFourToAnInsideStraightWithOneHighCards(){
 
@@ -1382,11 +1476,38 @@ public class CanHoldCards extends State {
 
 
     private boolean isThreeToAStraightFlush3(){
-    	
-    	return false;
+
+        boolean is3TF = this.isThreeToFlush();
+
+        if(is3TF) {
+
+            Player player = this.match.getPlayer();
+            int highCardCounter = 0;
+            int gapCounter = 0;
+
+            for (Card c : player.getHand()) {
+                if (this.suitCount.get(c.getSuit()) == 3) {
+                    if (c.getRank() == Rank.JACK || c.getRank() == Rank.QUEEN
+                            || c.getRank() == Rank.KING || c.getRank() == Rank.ACE) {
+
+                        highCardCounter++;
+                    }
+                }
+            }
+
+            gapCounter = this.getNumberOfGaps();
+
+            return (gapCounter == 2) && (highCardCounter == 0);
+
+
+        }
+
+
+        return false;
 
 
     }
+
 
     private boolean isKQUnsuited(){
 
@@ -1514,7 +1635,27 @@ public class CanHoldCards extends State {
         return null;
     }
 
+    private int getNumberOfGaps() {
 
+        int gapCounter = 0;
+
+        for (Rank r1 : Rank.values()) {
+            if (this.suitCount.get(r1) == 3) {
+                for (Rank r2 : Rank.values()) {
+                    if (this.suitCount.get(r2) == 3 && r1 != r2 && (r2.ordinal() > r1.ordinal())) {
+
+                        if (Math.abs(r1.ordinal() - r2.ordinal()) > 1) {
+                            gapCounter++;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        return gapCounter;
+
+    }
 
 
     private Rank getThreeOfAKindRank(){
