@@ -498,10 +498,12 @@ public class CanHoldCards extends State {
                 if(counter > 1) outsideIndex = 0;
                 else outsideIndex = possibleOutsideIndex;
 
+            int index = 0;
 
             for (int i=0; i<5; i++) {
-                if(i != outsideIndex)
-                    indexArray[i] = i+1;
+                if (i != outsideIndex) {
+                    indexArray[index++] = i + 1;
+                }
             }
 
 
@@ -576,10 +578,10 @@ public class CanHoldCards extends State {
             if(counter > 1) outsideIndex = 0;
             else outsideIndex = possibleOutsideIndex;
 
-
+            int index = 0;
             for (int i=0; i<5; i++) {
                 if(i != outsideIndex)
-                    indexArray[i] = i+1;
+                    indexArray[index++] = i+1;
             }
 
 
@@ -651,10 +653,10 @@ public class CanHoldCards extends State {
             if(counter > 1) outsideIndex = 0;
             else outsideIndex = possibleOutsideIndex;
 
-
+            int index = 0;
             for (int i=0; i<5; i++) {
                 if(i != outsideIndex)
-                    indexArray[i] = i+1;
+                    indexArray[index++] = i+1;
             }
 
 
@@ -693,10 +695,10 @@ public class CanHoldCards extends State {
             if(counter > 1) outsideIndex = 0;
             else outsideIndex = possibleOutsideIndex;
 
-
+            int index = 0;
             for (int i=0; i<5; i++) {
                 if(i != outsideIndex)
-                    indexArray[i] = i+1;
+                    indexArray[index++] = i+1;
             }
 
 

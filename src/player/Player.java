@@ -12,6 +12,7 @@ public class Player extends Hand {
     private int credit;
     private int initialCredit;
     private int totalAmountBet;
+    private int totalAmountReceived;
 
     private int lastBetAmount;
     private boolean hasBetBefore;
