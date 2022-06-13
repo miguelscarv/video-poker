@@ -6,8 +6,8 @@ import game.GameMode;
 
 public class Main {
     public static void main(String[] args) {
-
-      /*  GameMode doubleBonus710 = new DoubleBonus710(10000, "/Users/JB/Desktop/card-file.txt",  "/Users/JB/Desktop/cmd-file.txt");
+        /*
+        GameMode doubleBonus710 = new DoubleBonus710(10000, "/Users/JB/Desktop/card-file.txt",  "/Users/JB/Desktop/cmd-file.txt");
 
         doubleBonus710.run();
         */
@@ -19,7 +19,7 @@ public class Main {
             GameMode doubleBonus710 = new DoubleBonus710(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]));
             doubleBonus710.run();
         }
-
+        
 
     }
 }
