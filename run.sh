@@ -11,10 +11,9 @@ then
 elif [ "$1" == "-s" ];
 then 
 
-	read -p "Bet amount and number of deals: " amount ndeals
 	echo "Running it in SIMULATION mode..."
 	echo""
-	java -jar src/videopoker.jar $1 10000 $amount $ndeals
+	java -jar src/videopoker.jar $1 10000 5 100000
 
 else
 	echo "Commands do not match either options..."
