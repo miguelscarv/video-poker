@@ -19,6 +19,11 @@ public class Hand {
     //adds cards to hand until hand has 5 cards
     public void addCardsToHand(Deck d){
         int handSize = this.hand.size();
+        int deckSize = d.getSize();
+
+        if (5-handSize > deckSize){
+            System.out.println("There are not enough cards in the deck...");
+        }
 
         for (int i = 0; i < 5 - handSize; i++){
             Card tempCard = d.popCard();

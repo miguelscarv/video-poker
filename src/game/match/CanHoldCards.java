@@ -69,6 +69,15 @@ public class CanHoldCards extends State {
 
     }
 
+    private boolean contains(final int[] arr, final int key) {
+        for (int i : arr) {
+            if (i - 1 == key) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void computeHandOutcome() {
 
         Player player = this.match.getPlayer();
@@ -1692,12 +1701,5 @@ public class CanHoldCards extends State {
         return null;
     }
 
-    private boolean contains(final int[] arr, final int key) {
-        for (int i : arr) {
-            if (i - 1 == key) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 }
