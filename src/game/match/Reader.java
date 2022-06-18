@@ -64,7 +64,7 @@ final public class Reader {
             myReader.close();
 
             contents = contents.replaceAll("\\s+","");
-            String[] individualCommandArray = contents.split("((?=[bdh$as]))");
+            String[] individualCommandArray = contents.split("((?=[a-z$]))");
 
             for (String uniqueCommand: individualCommandArray){
                 FullCommand command = getCorrespondingFullCommand(uniqueCommand);
@@ -151,13 +151,15 @@ final public class Reader {
         CommandType commandType = null;
         int[] numbers = null;
 
-       if (s.length() == 1){
-
            switch (s.charAt(0)) {
 
                case 'b':
                    commandType = CommandType.BET;
-                   numbers = new int[]{5};
+                   if (s.length() == 1){
+                       numbers = new int[]{5};
+                   } else {
+                       numbers = new int[]{Integer.parseInt(s.substring(1))};
+                   }
                    break;
                case '$':
                    commandType = CommandType.CREDIT;
@@ -173,27 +175,18 @@ final public class Reader {
                    break;
                case 'h':
                    commandType = CommandType.HOLD;
-                   numbers = new int[0];
-                   break;
-           }
+                   if (s.length() == 1) {
+                       numbers = new int[0];
+                   }else {
+                       numbers = new int[s.substring(1).length()];
 
-       } else {
-
-           switch (s.charAt(0)) {
-
-               case 'b':
-                   commandType = CommandType.BET;
-                   numbers = new int[]{Integer.parseInt(s.substring(1))};
-                   break;
-               case 'h':
-                   commandType = CommandType.HOLD;
-                   numbers = new int[s.substring(1).length()];
-
-                   for (int i = 0; i < s.substring(1).length(); i++){
-                        numbers[i] = Character.getNumericValue(s.substring(1).charAt(i));
+                       for (int i = 0; i < s.substring(1).length(); i++){
+                           numbers[i] = Character.getNumericValue(s.substring(1).charAt(i));
+                       }
                    }
+                   break;
            }
-       }
+
 
        FullCommand fullCommand = new FullCommand(commandType);
        if (numbers != null) { fullCommand.addNumbers(numbers);}

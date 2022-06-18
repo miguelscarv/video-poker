@@ -13,7 +13,7 @@ then
 
 	echo "Running it in SIMULATION mode..."
 	echo""
-	java -jar src/videopoker.jar $1 10000 5 100000
+	java -jar src/videopoker.jar $1 10000 5 1000000
 
 else
 	echo "Commands do not match either options..."
