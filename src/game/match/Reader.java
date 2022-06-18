@@ -67,11 +67,6 @@ final public class Reader {
             String[] individualCommandArray = contents.split("((?=[a-z$]))");
 
 
-            for(String i: individualCommandArray){
-                System.out.println(i);
-            }
-
-
             for (String uniqueCommand: individualCommandArray){
                 FullCommand command = getCorrespondingFullCommand(uniqueCommand);
                 fullCommandList.add(command);
