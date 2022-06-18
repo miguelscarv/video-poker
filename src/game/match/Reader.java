@@ -64,12 +64,18 @@ final public class Reader {
             myReader.close();
 
             contents = contents.replaceAll("\\s+","");
-            String[] individualCommandArray = contents.split("((?=[bdh$as]))");
+            String[] individualCommandArray = contents.split("((?=[a-z$]))");
+
+            for(String i: individualCommandArray){
+                System.out.println(i);
+            }
 
             for (String uniqueCommand: individualCommandArray){
                 FullCommand command = getCorrespondingFullCommand(uniqueCommand);
                 fullCommandList.add(command);
             }
+
+
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred reading the command file");
