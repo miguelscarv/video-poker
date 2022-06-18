@@ -12,7 +12,6 @@ public class Main {
 
         doubleBonus710.run();
         */
-
         if (args[0].equals("-d")) {
             GameMode doubleBonus710 = new DoubleBonus710(Integer.parseInt(args[1]), args[2], args[3]);
             doubleBonus710.run();

@@ -23,11 +23,11 @@ public class Hand {
 
         if (5-handSize > deckSize){
             System.out.println("There are not enough cards in the deck...");
-        }
-
-        for (int i = 0; i < 5 - handSize; i++){
-            Card tempCard = d.popCard();
-            this.hand.add(tempCard);
+        }else{
+            for (int i = 0; i < 5 - handSize; i++){
+                Card tempCard = d.popCard();
+                this.hand.add(tempCard);
+            }
         }
     }
 
