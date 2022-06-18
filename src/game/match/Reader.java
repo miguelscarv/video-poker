@@ -66,9 +66,11 @@ final public class Reader {
             contents = contents.replaceAll("\\s+","");
             String[] individualCommandArray = contents.split("((?=[a-z$]))");
 
+
             for(String i: individualCommandArray){
                 System.out.println(i);
             }
+
 
             for (String uniqueCommand: individualCommandArray){
                 FullCommand command = getCorrespondingFullCommand(uniqueCommand);
@@ -157,54 +159,48 @@ final public class Reader {
         CommandType commandType = null;
         int[] numbers = null;
 
-       if (s.length() == 1){
+        switch (s.charAt(0)) {
 
-           switch (s.charAt(0)) {
+            case 'b':
+                commandType = CommandType.BET;
+                if (s.length() == 1){
+                    numbers = new int[]{5};
+                } else {
+                    numbers = new int[]{Integer.parseInt(s.substring(1))};
+                }
+                break;
 
-               case 'b':
-                   commandType = CommandType.BET;
-                   numbers = new int[]{5};
-                   break;
-               case '$':
-                   commandType = CommandType.CREDIT;
-                   break;
-               case 'a':
-                   commandType = CommandType.ADVICE;
-                   break;
-               case 's':
-                   commandType = CommandType.STATISTICS;
-                   break;
-               case 'd':
-                   commandType = CommandType.DEAL;
-                   break;
-               case 'h':
-                   commandType = CommandType.HOLD;
-                   numbers = new int[0];
-                   break;
-           }
+            case '$':
+                commandType = CommandType.CREDIT;
+                break;
+            case 'a':
+                commandType = CommandType.ADVICE;
+                break;
+            case 's':
+                commandType = CommandType.STATISTICS;
+                break;
+            case 'd':
+                commandType = CommandType.DEAL;
+                break;
+            case 'h':
+                commandType = CommandType.HOLD;
+                if (s.length() == 1) {
+                    numbers = new int[0];
+                }else {
+                    numbers = new int[s.substring(1).length()];
 
-       } else {
-
-           switch (s.charAt(0)) {
-
-               case 'b':
-                   commandType = CommandType.BET;
-                   numbers = new int[]{Integer.parseInt(s.substring(1))};
-                   break;
-               case 'h':
-                   commandType = CommandType.HOLD;
-                   numbers = new int[s.substring(1).length()];
-
-                   for (int i = 0; i < s.substring(1).length(); i++){
+                    for (int i = 0; i < s.substring(1).length(); i++){
                         numbers[i] = Character.getNumericValue(s.substring(1).charAt(i));
-                   }
-           }
-       }
+                    }
+                }
+                break;
+        }
 
-       FullCommand fullCommand = new FullCommand(commandType);
-       if (numbers != null) { fullCommand.addNumbers(numbers);}
 
-       return fullCommand;
+        FullCommand fullCommand = new FullCommand(commandType);
+        if (numbers != null) { fullCommand.addNumbers(numbers);}
+
+        return fullCommand;
 
     }
 }
