@@ -3,12 +3,25 @@ package game.match;
 import command.FullCommand;
 import player.Player;
 
+/**
+ * Class CanBet represents a state, in which the legal commands are: bet (b), credit ($) and statistics (s).
+ * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ */
 public class CanBet extends State {
-
+    /**
+     * @see "game.match.State Constructor".
+     * @param match Match associated with the state.
+     */
     public CanBet(Match match){
         super(match);
     }
 
+    /**
+     * @see "game.match.State bet method"
+     * At this state this method performs a bet, meaning the player information about its credit is updated.
+     * @param command Full command with command type BET.
+     * @throws IllegalException Exception Thrown when illegal command.
+     */
     @Override
     public void bet(FullCommand command) throws IllegalException {
 
@@ -52,16 +65,32 @@ public class CanBet extends State {
         }
     }
 
+    /**
+     * @see "game.match.State dealCards method".
+     * At this state this method throws an illegal exception.
+     * @throws IllegalException Exception Thrown when illegal command.
+     */
     @Override
     public void dealCards() throws IllegalException {
         throw new IllegalException("d");
     }
 
+    /**
+     * @see "game.match.State holdCards method".
+     * At this state this method throws an illegal exception.
+     * @param command Full command with command type HOLD.
+     * @throws IllegalException Exception Thrown when illegal command.
+     */
     @Override
     public void holdCards(FullCommand command) throws IllegalException {
         throw new IllegalException("h");
     }
 
+    /**
+     * @see "game.match.State printAdvice method".
+     * At this state this method throws an illegal exception.
+     * @throws IllegalException Exception Thrown when illegal command.
+     */
     @Override
     public void printAdvice() throws IllegalException {
         throw new IllegalException("a");

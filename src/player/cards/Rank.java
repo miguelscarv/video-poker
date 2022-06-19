@@ -1,5 +1,8 @@
 package player.cards;
 
+/**
+ * Possible Ranks of the cards.
+ */
 public enum Rank {
     TWO,
     THREE,

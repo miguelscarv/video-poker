@@ -62,29 +62,53 @@ public class DoubleBonus710 implements GameMode{
     }
 
     /**
-     * This method creates and initializes all the information of the player
-     * @param credit
+     * This method creates and initializes all the information of the player.
+     * @param credit Initial credit of the player.
      */
     @Override
     public void initPlayer(int credit) {
         this.player = new Player(credit);
     }
+
+    /**
+     * This method creates a deck from the card file (Debug Mode).
+     * @param pathToFile Path to the card file.
+     */
     @Override
     public void initDebugDeck(String pathToFile) {
         this.deck = new Deck(Reader.readCardFile(pathToFile));
     }
+
+    /**
+     * This method creates a deck with all the 52 cards (Simulation Mode).
+     */
     @Override
     public void initSimulationDeck() {
         this.deck = new Deck();
     }
+
+    /**
+     * This method creates a list with all the commands read from the command file (Debug Mode).
+     * @param pathToFile Path to the command file.
+     */
     @Override
     public void initCommands(String pathToFile) {
         this.fullCommandList = Reader.readCommandFile(pathToFile);
     }
+
+    /**
+     * This method creates a match in which a player and a deck would be created.
+     */
     @Override
     public void initMatch() {
         this.match = new Match(this.player,this.deck,this.isDebug);
     }
+
+    /**
+     * This method starts the full implementation of the game.
+     * In Debug mode, the program finish when all the commands are executed.
+     * In Simulation mode, the program finish when all the rounds (number of deals) are completed, after the statistics are printed.
+     */
     @Override
     public void run() {
 

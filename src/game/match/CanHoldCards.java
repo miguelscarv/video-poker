@@ -13,29 +13,51 @@ import game.match.IllegalException;
 
 import java.util.*;
 
+/**
+ * Class CanHoldCards represents a state, in which the legal commands are: hold (h), advice (a), credit ($) and statistics (s).
+ * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ */
 public class CanHoldCards extends State {
 
 
     private Map<Suit, Integer> suitCount = new HashMap<Suit, Integer>();
     private Map<Rank, Integer> rankCount = new HashMap<Rank, Integer>();
 
+    /**
+     * @see "game.match.State Constructor".
+     * @param match Match associated with the state.
+     */
     public CanHoldCards(Match match) {
         super(match);
         this.setCountersToZero();
     }
 
-
+    /**
+     * @see "game.match.State bet method"
+     * At this state this method throws an illegal exception.
+     * @param command Full command with command type BET.
+     * @throws IllegalException Exception Thrown when illegal command.
+     */
     @Override
     public void bet(FullCommand command) throws IllegalException {
         throw new IllegalException("b");
     }
 
-
+    /**
+     * @see "game.match.State dealCards method"
+     * At this state this method throws an illegal exception.
+     * @throws IllegalException Exception Thrown when illegal command.
+     */
     @Override
     public void dealCards() throws IllegalException {
         throw new IllegalException("d");
     }
 
+    /**
+     * @see "game.match.State holdCards method"
+     * At this state this method performs a hold, meaning that the player is going to hold the cards specified.
+     * @param command Full command with command type HOLD.
+     */
     @Override
     public void holdCards(FullCommand command) {
 
@@ -78,6 +100,9 @@ public class CanHoldCards extends State {
         return false;
     }
 
+    /**
+     * This method updates the credit of the player regarding the amount bet and the hand output.
+     */
     private void computeHandOutcome() {
 
         Player player = this.match.getPlayer();
@@ -140,6 +165,10 @@ public class CanHoldCards extends State {
         this.setCountersToZero();
     }
 
+    /**
+     * This method classifies the hand of the player regarding the present cards in the hand.
+     * @return String that represents the hand outcome.
+     */
     private String classifyHand() {
 
         Player player = this.match.getPlayer();
@@ -186,7 +215,10 @@ public class CanHoldCards extends State {
         return combination;
     }
 
-
+    /**
+     * This method checks if the hand of the player is classified as a "Three of a Kind".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeOfAKind() {
         for (Rank r : Rank.values()) {
             if (rankCount.get(r) == 3) {
@@ -196,6 +228,10 @@ public class CanHoldCards extends State {
         return false;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Flush".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFlush() {
         boolean isFlush = this.suitCount.get(Suit.CLUBS) == 5 ||
                 this.suitCount.get(Suit.DIAMONDS) == 5 ||
@@ -204,6 +240,10 @@ public class CanHoldCards extends State {
         return isFlush;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Jacks or Better".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isJacksOrBetter() {
         boolean isJacksOrBetter = this.rankCount.get(Rank.JACK) == 2 ||
                 this.rankCount.get(Rank.QUEEN) == 2 ||
