@@ -4,15 +4,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Deck class represents a full deck of cards. As a full deck of cards, it has a list of cards.
+ * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ */
 public class Deck {
 
     private List<Card> deck;
 
+    /**
+     * Constructor to initialize deck object from a card-file (Debug Mode).
+     * @param d List of cards to constitute the deck.
+     */
     //creates a deck with given cards from card-file
     public Deck(List<Card> d){
         this.deck = d;
     }
 
+    /**
+     * Constructor to initialize deck object with all the 52 cards (Simulation Mode).
+     */
     //creates a deck with 52 cards from scratch
     public Deck(){
         this.deck = new ArrayList<Card>();
@@ -26,11 +37,18 @@ public class Deck {
         this.shuffle();
     }
 
+    /**
+     * This method shuffles the deck.
+     */
     //shuffles deck
     public void shuffle(){
         Collections.shuffle(this.deck);
     }
 
+    /**
+     * This method prints n number of cards from the deck or none if the deck does not have n number of cards.
+     * @param n Number of cards to be printed.
+     */
     //prints n number of cards
     public void printCards(int n){
         if (this.deck.size() >= n) {
@@ -42,6 +60,10 @@ public class Deck {
         }
     }
 
+    /**
+     * This method adds a card to the end of the deck.
+     * @param c Card that is added to the deck.
+     */
     //adds a card to deck
     public void addCard(Card c){
 
@@ -49,6 +71,10 @@ public class Deck {
 
     }
 
+    /**
+     * This method removes a card from the beginning of the deck and returns it.
+     * @return Card that is being removed from the deck.
+     */
     //removes card from deck and returns it
     public Card popCard(){
         Card temp = this.deck.get(0);
@@ -56,6 +82,10 @@ public class Deck {
         return temp;
     }
 
+    /**
+     * This methods returns the size of the deck.
+     * @return Size of deck.
+     */
     //returns size of deck
     public int getSize(){
         return this.deck.size();

@@ -1,18 +1,41 @@
 package player.cards;
 
+/**
+ * Card class represents a regular deck card. As a regular deck card, it has a suit and a rank.
+ * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ */
 public class Card {
 
     private Rank rank;
     private Suit suit;
 
+    /**
+     * Constructor to initialize card object.
+     * @param r Rank of the card.
+     * @param s Suit of the card.
+     */
     public Card(Rank r, Suit s){
         this.rank = r;
         this.suit = s;
     }
 
+    /**
+     * This method returns the rank of the present card.
+     * @return Rank of the card.
+     */
     public Rank getRank() { return this.rank; }
+
+    /**
+     * This method returns the suit of the present card.
+     * @return Suit of the card.
+     */
     public Suit getSuit() { return this.suit; }
 
+
+    /**
+     * This method computes a valid representation of a card that can be printed.
+     * @return Unique String that identifies the card.
+     */
     @Override
     public String toString(){
 
