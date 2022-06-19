@@ -12,11 +12,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Reader class represents the class responsible for reading the given card and command file.
+ * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ */
 final public class Reader {
 
     private static List<Card> deck = new ArrayList<Card>();
     private static List<FullCommand> fullCommandList = new ArrayList<FullCommand>();
 
+    /**
+     * This method reads the content of the card file in order to create a deck.
+     * @param pathToFile Path to the card file
+     * @return Deck created from reading the card file
+     */
     public static List<Card> readCardFile(String pathToFile){
 
         String contents = "";
@@ -48,6 +57,11 @@ final public class Reader {
         return deck;
     }
 
+    /**
+     * This method reads the command file in order to create a list with all the commands.
+     * @param pathToFile Path to the command file
+     * @return List of commands read from the command file
+     */
     public static List<FullCommand> readCommandFile(String pathToFile){
 
         String contents = "";
@@ -82,6 +96,11 @@ final public class Reader {
         return fullCommandList;
     }
 
+    /**
+     * This method creates the cards present in the card file.
+     * @param s Each card in String format
+     * @return Card corresponding to the input String
+     */
     private static Card getCorrespondingCard(String s) {
         Rank rank = null;
         Suit suit = null;
@@ -149,6 +168,11 @@ final public class Reader {
         return card;
     }
 
+    /**
+     * This method creates the commands present in the command file.
+     * @param s Each command in String format
+     * @return FullCommand corresponding to the input String
+     */
     private static FullCommand getCorrespondingFullCommand(String s){
 
         CommandType commandType = null;
