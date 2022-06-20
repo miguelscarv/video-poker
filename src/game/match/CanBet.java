@@ -28,7 +28,6 @@ public class CanBet extends State {
         Player player = super.match.getPlayer();
 
         if(command.hasNumbers()) {
-
             if (command.getNumbers()[0] > 5 || command.getNumbers()[0] < 1) {
                 throw new IllegalException();
             } else {

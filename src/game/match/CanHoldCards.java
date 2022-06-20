@@ -20,6 +20,7 @@ import java.util.*;
 public class CanHoldCards extends State {
 
 
+
     private Map<Suit, Integer> suitCount = new HashMap<Suit, Integer>();
     private Map<Rank, Integer> rankCount = new HashMap<Rank, Integer>();
 

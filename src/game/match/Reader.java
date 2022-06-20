@@ -78,7 +78,7 @@ final public class Reader {
             myReader.close();
 
             contents = contents.replaceAll("\\s+","");
-            String[] individualCommandArray = contents.split("((?=[a-z$]))");
+            String[] individualCommandArray = contents.split("((?=[/\\D+/g]))");
 
 
             for (String uniqueCommand: individualCommandArray){
@@ -105,7 +105,7 @@ final public class Reader {
         Rank rank = null;
         Suit suit = null;
 
-        if(s.length() > 2){
+        if(s.length() != 2){
             System.out.println("Invalid Card Format");
             System.exit(1);
         }
@@ -193,9 +193,7 @@ final public class Reader {
 
             case 'b':
                 commandType = CommandType.BET;
-                if (s.length() == 1){
-                    numbers = new int[]{5};
-                } else {
+                if (s.length() != 1){
                     numbers = new int[]{Integer.parseInt(s.substring(1))};
                 }
                 break;

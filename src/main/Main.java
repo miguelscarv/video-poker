@@ -22,6 +22,6 @@ public class Main {
             doubleBonus710.run();
         }
 
-
+        
     }
 }
