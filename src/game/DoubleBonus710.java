@@ -31,7 +31,7 @@ public class DoubleBonus710 implements GameMode{
      * @param pathToCards String representing the path to the card file.
      * @param pathToCommands String representing the path to the command file.
      */
-    public DoubleBonus710(int playerCredit, String pathToCards, String pathToCommands){
+    public DoubleBonus710(int playerCredit, String pathToCommands, String pathToCards){
 
         this.isDebug = true;
         this.initPlayer(playerCredit);

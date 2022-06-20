@@ -152,6 +152,7 @@ final public class Reader {
                 rank = Rank.ACE;
                 break;
             default:
+                //System.out.println(s);
                 System.out.println("Invalid Card Format");
                 System.exit(1);
         }
@@ -171,6 +172,7 @@ final public class Reader {
                 suit = Suit.DIAMONDS;
                 break;
             default:
+                //System.out.println(s);
                 System.out.println("Invalid Card Format");
                 System.exit(1);
         }
