@@ -105,6 +105,11 @@ final public class Reader {
         Rank rank = null;
         Suit suit = null;
 
+        if(s.length() > 2){
+            System.out.println("Invalid Card Format");
+            System.exit(1);
+        }
+
         switch (s.charAt(0)) {
 
             case '2':
@@ -146,6 +151,9 @@ final public class Reader {
             case 'A':
                 rank = Rank.ACE;
                 break;
+            default:
+                System.out.println("Invalid Card Format");
+                System.exit(1);
         }
 
         switch (s.charAt(1)) {
@@ -162,6 +170,9 @@ final public class Reader {
             case 'D':
                 suit = Suit.DIAMONDS;
                 break;
+            default:
+                System.out.println("Invalid Card Format");
+                System.exit(1);
         }
 
         Card card = new Card(rank, suit);
