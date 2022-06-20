@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  * Reader class represents the class responsible for reading the given card and command file.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 final public class Reader {
 

@@ -2,7 +2,7 @@ package player.cards;
 
 /**
  * Card class represents a regular deck card. As a regular deck card, it has a suit and a rank.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public class Card {
 

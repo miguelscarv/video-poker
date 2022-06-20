@@ -5,7 +5,7 @@ import player.Player;
 
 /**
  * Abstract class State represents an abstract type that defines the possible actions at a certain part of the match.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public abstract class State {
 

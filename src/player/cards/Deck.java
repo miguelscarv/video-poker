@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Deck class represents a full deck of cards. As a full deck of cards, it has a list of cards.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public class Deck {
 

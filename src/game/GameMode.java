@@ -3,7 +3,7 @@ package game;
 /**
  * Interface GameMode represents the actual game of cards that is being played.
  * The specifications for the actual game are specified by a class that implements this interface.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public interface GameMode {
 

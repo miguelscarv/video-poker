@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * FullCommand class represents a command read from the command file (Debug mode).
  * As a command, it may, in case of command hold and bet, or may not contain numbers.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public class FullCommand {
     private CommandType command;
@@ -23,7 +23,8 @@ public class FullCommand {
 
     /**
      * This method adds numbers to a specific command. Used when the command type is Bet or Hold.
-     * @param numbers Array with the numbers that are being added to the command. In case of command type Bet, only one number is added.
+     * @param numbers Array with the numbers that are being added to the command.
+     * In case of command type Bet, only one number is added.
      */
     public void addNumbers(int[] numbers){
         this.numbers = numbers;

@@ -4,6 +4,10 @@ import command.FullCommand;
 import player.Player;
 import player.cards.Deck;
 
+/**
+ * Match class represents the actual match of the game.
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
+ */
 public class Match {
 
     private State canBet;
@@ -59,10 +63,10 @@ public class Match {
             System.out.println(i.getMessage());
         }
     }
-    
+
     /**
      * Method responsible for holding the chosen cards 
-     * @param command Command that has the indexes of the cards to hold
+     * @param command Command that has the indices of the cards to hold
      */
     public void holdCards(FullCommand command){
         try{
@@ -71,7 +75,7 @@ public class Match {
             System.out.println(i.getMessage());
         }
     }
-    
+
     /**
      * Method that prints advice from following the strategy
      */
@@ -88,7 +92,7 @@ public class Match {
      * Method that prints the available credit
      */
     public void printCredit() { this.currentState.printCredit(); }
-    
+
     /**
      * Method that prints the statistics of the match
      */
@@ -99,13 +103,13 @@ public class Match {
      * @return State in which it is possible to bet
      */
     public State getCanBet() { return this.canBet; }
-    
+
     /**
      * Getter of the attribute canDealCards
      * @return State in which it is possible to deal
      */
     public State getCanDealCards() { return this.canDealCards; }
-    
+
     /**
      * Getter of the attribute canHoldCards
      * @return State in which it is possible to hold hand cards

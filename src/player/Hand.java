@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Hand Class represents a hand of a player. As a hand of a player, it contains a list of five cards.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public class Hand {
 

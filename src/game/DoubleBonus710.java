@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * DoubleBonus710 class represents the actual specific video poker game that is being played.
  * In this case our game is a variation of jacks or better with a bonus payout for four aces.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public class DoubleBonus710 implements GameMode{
 
@@ -43,7 +43,7 @@ public class DoubleBonus710 implements GameMode{
     }
 
     /**
-     * Constructor to initialize game object from an initial credit, a bet amount and a number of deals (Simulation Mode).
+     * Constructor to initialize game object from an initial credit, a bet amount and a number of deals(Simulation Mode)
      * @param playerCredit Initial credit of the player.
      * @param betAmount Amount that will be bet in all rounds.
      * @param numberOfDeals Number of deals (number of rounds played).
@@ -107,7 +107,7 @@ public class DoubleBonus710 implements GameMode{
     /**
      * This method starts the full implementation of the game.
      * In Debug mode, the program finish when all the commands are executed.
-     * In Simulation mode, the program finish when all the rounds (number of deals) are completed, after the statistics are printed.
+     * In Simulation mode, the program finish when all the rounds are completed, after the statistics are printed.
      */
     @Override
     public void run() {

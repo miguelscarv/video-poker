@@ -14,8 +14,8 @@ import game.match.IllegalException;
 import java.util.*;
 
 /**
- * Class CanHoldCards represents a state, in which the legal commands are: hold (h), advice (a), credit ($) and statistics (s).
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * Class CanHoldCards represents a state, in which the legal commands are: hold(h),advice(a),credit($) and statistics(s)
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public class CanHoldCards extends State {
 
@@ -24,7 +24,7 @@ public class CanHoldCards extends State {
     private Map<Rank, Integer> rankCount = new HashMap<Rank, Integer>();
 
     /**
-     * @see "game.match.State Constructor".
+     * @see "game.match.State Constructor."
      * @param match Match associated with the state.
      */
     public CanHoldCards(Match match) {
@@ -33,8 +33,8 @@ public class CanHoldCards extends State {
     }
 
     /**
-     * @see "game.match.State bet method"
      * At this state this method throws an illegal exception.
+     * @see "game.match.State bet method."
      * @param command Full command with command type BET.
      * @throws IllegalException Exception Thrown when illegal command.
      */
@@ -44,8 +44,8 @@ public class CanHoldCards extends State {
     }
 
     /**
-     * @see "game.match.State dealCards method"
      * At this state this method throws an illegal exception.
+     * @see "game.match.State dealCards method."
      * @throws IllegalException Exception Thrown when illegal command.
      */
     @Override
@@ -54,8 +54,8 @@ public class CanHoldCards extends State {
     }
 
     /**
-     * @see "game.match.State holdCards method"
      * At this state this method performs a hold, meaning that the player is going to hold the cards specified.
+     * @see "game.match.State holdCards method."
      * @param command Full command with command type HOLD.
      */
     @Override
@@ -252,6 +252,10 @@ public class CanHoldCards extends State {
         return isJacksOrBetter;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Two Pair".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isTwoPair() {
         int numberOfPairs = 0;
 
@@ -266,6 +270,10 @@ public class CanHoldCards extends State {
         return false;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Full House".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFullHouse() {
         boolean hasPair = false;
         boolean hasThree = false;
@@ -281,6 +289,10 @@ public class CanHoldCards extends State {
         return hasPair && hasThree;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four of a Kind".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourOfAKind() {
         for (Rank r : Rank.values()) {
             if (rankCount.get(r) >= 4) {
@@ -290,6 +302,10 @@ public class CanHoldCards extends State {
         return false;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Straight".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFiveConsecutiveCards() {
 
         int counter = 0;
@@ -316,6 +332,9 @@ public class CanHoldCards extends State {
         return toReturn;
     }
 
+    /**
+     * This method resets the values of the suitCount and rankCount. Called after the classification of the hand.
+     */
     private void setCountersToZero() {
         for (Rank r : Rank.values()) {
             rankCount.put(r, 0);
@@ -325,6 +344,10 @@ public class CanHoldCards extends State {
         }
     }
 
+    /**
+     * This method implements the full strategy. Always called in the Simulation mode.
+     * @return Array containing the indices of the cards the player should hold.
+     */
     public int[] getAdvice() {
 
         Player player = super.match.getPlayer();
@@ -925,6 +948,11 @@ public class CanHoldCards extends State {
         return indexArray;
     }
 
+    /**
+     * At this state this method performs an advice, meaning the player is adviced to hold specific cards in the hand.
+     * Called only in the Debug Mode.
+     * @see "game.match.State printAdvice method."
+     */
     @Override
     public void printAdvice() {
 
@@ -938,6 +966,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to a Royal Flush".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToARoyalFlush() {
 
         if(this.isFourToFlush()) {
@@ -960,6 +992,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to a Straight Flush".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToAStraightFlush() {
 
         boolean is4TF = this.isFourToFlush();
@@ -969,6 +1005,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to a Flush".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToFlush() {
 
         boolean is4TF = this.suitCount.get(Suit.CLUBS) >= 4 ||
@@ -980,6 +1020,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Flush".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToFlush() {
 
         boolean is3TF = this.suitCount.get(Suit.CLUBS) >= 3 ||
@@ -991,7 +1035,10 @@ public class CanHoldCards extends State {
 
     }
 
-
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Royal Flush".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToARoyalFlush() {
 
         if(this.isThreeToFlush()) {
@@ -1013,6 +1060,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to an Outside Straight".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToAnOutsideStraight() {
 
 
@@ -1042,6 +1093,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to an Inside Straight".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToAnInsideStraight() {
 
         boolean isFTIS = (this.rankCount.get(Rank.JACK) >= 1 &&
@@ -1085,6 +1140,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Low Pair".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isLowPair() {
 
         boolean isLowPair = this.rankCount.get(Rank.TWO) == 2 ||
@@ -1102,6 +1161,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "AKQJ Unsuited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isAKQJUnsuited() {
         boolean isAKQJUnsuited = this.rankCount.get(Rank.ACE) == 1 &&
                 this.rankCount.get(Rank.KING) == 1 && this.rankCount.get(Rank.QUEEN) == 1 &&
@@ -1112,6 +1175,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Straight Flush type 1".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToAStraightFlush1() {
 
         boolean is3TF = this.isThreeToFlush();
@@ -1181,6 +1248,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to an Inside Straight with 3 High Cards".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToAnInsideStraightWithThreeHighCards() {
 
         boolean is4TIS = this.isFourToAnInsideStraight();
@@ -1214,6 +1285,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "QJ Suited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isQJSuited() {
 
         if (this.rankCount.get(Rank.JACK) == 1 && this.rankCount.get(Rank.QUEEN) == 1) {
@@ -1234,6 +1309,10 @@ public class CanHoldCards extends State {
         return false;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Flush with 2 High Cards".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToAFlushWithTwoHighCards() {
 
         Player player = this.match.getPlayer();
@@ -1257,6 +1336,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Two Suited High Cards".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isTwoSuitedHighCards() {
 
         Player player = this.match.getPlayer();
@@ -1277,6 +1360,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to an Inside Straight with 2 High cards".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToAnInsideStraightWithTwoHighCards() {
 
         boolean is4TIS = this.isFourToAnInsideStraight();
@@ -1309,6 +1396,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Straight Flush type 2".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToAStraightFlush2() {
 
         boolean is3TF = this.isThreeToFlush();
@@ -1355,7 +1446,10 @@ public class CanHoldCards extends State {
 
     }
 
-
+    /**
+     * This method checks if the hand of the player is classified as a "Four to an Inside Straight with 1 High card".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToAnInsideStraightWithOneHighCards() {
 
         boolean is4TIS = this.isFourToAnInsideStraight();
@@ -1389,6 +1483,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "KQJ Unsuited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isKQJUnsuited() {
 
 
@@ -1397,7 +1495,10 @@ public class CanHoldCards extends State {
                 this.rankCount.get(Rank.JACK) == 1);
     }
 
-
+    /**
+     * This method checks if the hand of the player is classified as a "JT Suited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isJTSuited() {
         //i might have overcomplicated
 
@@ -1426,6 +1527,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "QJ Unsuited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isQJUnsuited() {
 
 
@@ -1434,7 +1539,10 @@ public class CanHoldCards extends State {
 
     }
 
-
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Flush with 1 High card".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToAFlushWithOneHighCard() {
         Player player = this.match.getPlayer();
         int counter = 0;
@@ -1460,6 +1568,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "QT Suited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isQTSuited() {
 
 
@@ -1481,7 +1593,10 @@ public class CanHoldCards extends State {
         return false;
     }
 
-
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Straight Flush type 3".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToAStraightFlush3() {
 
         boolean is3TF = this.isThreeToFlush();
@@ -1515,7 +1630,10 @@ public class CanHoldCards extends State {
 
     }
 
-
+    /**
+     * This method checks if the hand of the player is classified as a "KQ Unsuited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isKQUnsuited() {
 
 
@@ -1524,6 +1642,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "KJ Unsuited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isKJUnsuited() {
 
 
@@ -1532,6 +1654,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as an "Ace".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isAce() {
 
         boolean isAce = this.rankCount.get(Rank.ACE) == 1;
@@ -1540,6 +1666,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "KT Suited".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isKTSuited() {
 
         if (this.rankCount.get(Rank.KING) == 1 && this.rankCount.get(Rank.TEN) == 1) {
@@ -1560,6 +1690,10 @@ public class CanHoldCards extends State {
         return false;
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Jack,Queen or King".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isJQK() {
 
         boolean isJQK = this.rankCount.get(Rank.JACK) == 1 ||
@@ -1571,6 +1705,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Four to an Inside Straight with no High cards".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isFourToAnInsideStraightWithNoHighCards() {
 
         boolean is4TIS = this.isFourToAnInsideStraight();
@@ -1590,6 +1728,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if the hand of the player is classified as a "Three to a Flush with no High cards".
+     * @return Boolean true/false depending on the outcome.
+     */
     private boolean isThreeToAFlushWithNoHighCard() {
 
         Player player = this.match.getPlayer();
@@ -1611,7 +1753,11 @@ public class CanHoldCards extends State {
 
     }
 
-
+    /**
+     * This method returns the Suit that appears "number" times in the hand.
+     * @param number Number of times a Suit is supposed to appear in the hand.
+     * @return Suit or null if there is no Suit that appears "number" times in hand.
+     */
     private Suit getNumberOfAKindSuit(int number) {
 
         for (Suit s : this.suitCount.keySet()) {
@@ -1623,6 +1769,10 @@ public class CanHoldCards extends State {
         return null;
     }
 
+    /**
+     * This method returns the Rank that appears twice in the hand (Pair).
+     * @return Rank of the Pair or null if there is no Pair.
+     */
     private Rank getPairRank() {
 
         if (this.rankCount.get(Rank.JACK) == 2) return Rank.JACK;
@@ -1642,6 +1792,11 @@ public class CanHoldCards extends State {
         return null;
     }
 
+    /**
+     * This method returns the number of gaps present on the hand.
+     * Used to classify Straight Flush draws types.
+     * @return Number of gaps.
+     */
     private int getNumberOfGaps() {
 
         int gapCounter = 0;
@@ -1664,6 +1819,12 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method checks if a card with a specific Rank has a Suit that appears 3 times in the hand.
+     * Used to Classify Straight Flush draws types.
+     * @param rank Specific Rank
+     * @return Bolean true/false depending on the outcome.
+     */
     private boolean belongsTo(Rank rank) {
 
         Player player = this.match.getPlayer();
@@ -1679,6 +1840,10 @@ public class CanHoldCards extends State {
 
     }
 
+    /**
+     * This method returns the index of the card that has the highest Rank in the hand.
+     * @return Index of the card with the highest Rank.
+     */
     private int getBiggerCardIndex() {
 
         Player player = this.match.getPlayer();
@@ -1702,6 +1867,10 @@ public class CanHoldCards extends State {
         return index;
     }
 
+    /**
+     * This method returns the card index that does not belong to a Straight in a "Four to an Inside Straight" draw.
+     * @return Index that does not belong to the Straight.
+     */
     private int getFourToAnInsideStraightOutsideIndex() {
 
         int outsideIndex = 0;
@@ -1729,7 +1898,10 @@ public class CanHoldCards extends State {
 
     }
 
-
+    /**
+     * This method returns the Rank that appears 3 times in the hand.
+     * @return Rank that appears 3 times or null otherwise.
+     */
     private Rank getThreeOfAKindRank() {
 
         for (Rank r : this.rankCount.keySet()) {

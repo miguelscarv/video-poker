@@ -8,8 +8,9 @@ import java.util.Map;
 
 /**
  * Player Class represents a player.
- * A player can be seen as a hand with additional information regarding only the player: the current credit, the initial credit, the total amount bet, the total amount received in the end and the statistics.
- * @author Miguel Carvalho, Filipe Ferraz, João Baptista
+ * A player can be seen as a hand with additional information regarding only the player:
+ * the current credit, the initial credit, the total amount bet, the total amount received in the end and the statistics
+ * @author Miguel Carvalho, Filipe Ferraz, Joao Baptista
  */
 public class Player extends Hand {
 
@@ -110,7 +111,7 @@ public class Player extends Hand {
     public void setLastBetAmount(int amount ) { this.lastBetAmount = amount;}
 
     /**
-     * This method returns either true or false depending on if at a specific moment, a bet already occurred or not before.
+     * This method returns either true or false depending on if at a specific moment, a bet already occurred or not.
      * @return boolean true/false depending on the outcome
      */
     public boolean getHasBetBefore() { return this.hasBetBefore; }
